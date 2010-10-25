@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>CSH Attendance</title>
+        <title>CSH Member Profiles</title>
         <link href="<?=site_url('js/ext-3.2.1/resources/css/ext-all.css')?>" rel="stylesheet" type="text/css">
         <link href="<?=site_url('js/ext-3.2.1/resources/css/xtheme-gray.css')?>" rel="stylesheet" type="text/css">
         <script src="<?=site_url('js/ext-3.2.1/adapter/ext/ext-base-debug.js')?>" type="text/javascript"></script>
@@ -23,10 +23,10 @@
     <body>
         <div id="header">
             <div class="logo">
-                Template
+                CSH Member Profiles
             </div>
             <div class="right">
-                <b>Some Stuff</b>
+                <b>Welcome <a href="<?=site_url('me')?>">Sean McGary</a>!</b>
             </div>
         </div>
         <div id="container">

@@ -24,8 +24,39 @@ class User_Model extends Base_Model
         $results = $collection->find()->sort(array('uid' => 1));
 
         return $results;
+    }
 
+    public function get_sorted_users($index, $query, $is_regex = false)
+    {
+        $collection = $this->mongo->db->{$this->user_collection};
 
+        if($is_regex)
+        {
+            $query = new MongoRegex($query);
+        }
+
+        $results = $collection->find(array($index => $query))->sort(array($index => 1));
+
+        return $results;
+    }
+
+    public function user_query($index, $query, $is_regex, $get_one = false)
+    {
+        $collection = $this->mongo->db->{$this->user_collection};
+
+        if($is_regex)
+        {
+            $query = new MongoRegex($query);
+        }
+
+        if($get_one)
+        {
+            return $collection->findOne(array($index => $query));
+        }
+        else
+        {
+            return $collection->find(array($index => $query));
+        }
     }
 }
 ?>

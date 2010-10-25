@@ -1,36 +1,48 @@
 <?php
-class Main extends Controller
+require_once('base_controller.php');
+class Main extends Base_Controller
 {
     
-    public $page;
-    public $ldap;
-    public $mongo;
-
     public function  __construct()
     {
         parent::__construct();
-
-        $this->page = new Page_Framework();
-        $this->load->model('ldap_model');
-        //Mongo connection
-        //$this->mongo = new MongoDB_Inst();
-        $this->load->model('user_model');
-        //$this->mongo = new Mongo_db();
     }
 
     public function index()
     {
+        $this->page->load_javascript(site_url('js/sort_members.js'));
         $this->page->render('mainIndex_view', '', null);
 
     }
 
     public function sort_members($letter)
     {
-        $users = $this->user_model->get_all_users();
+        $users = $this->user_model->get_sorted_users('sn', "/^".strtolower($letter)."/i", true);
+        $result_string = '<table class="table-style"><tr><th>Name</th><th>CSH Username</th></tr>';
         foreach($users as $user)
         {
-            Util::printr($user);
+            $result_string .= '<tr>';
+            $result_string .= '<td><a href="'.site_url('main/member/'.$user['uid']).'">'.$user['sn'].', '. $user['givenname'].'</a></td>';
+            $result_string .= '<td>'.$user['uid'].'</td>';
+            $result_string .= '</tr>';
         }
+        
+        echo json_encode($result_string);
+    }
+
+    public function member($uid)
+    {
+        $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
+        $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
+                                        'birthday' => 'Birthday',
+                                        'cn' => 'Common Name',
+                                        'nickname' => 'Nickname',
+                                        'cellphone' => 'Cell Phone',
+                                        'homephone' => 'Home Phone',
+                                        'mail' => 'Email Addresses',
+                                        'blogurl' => 'Website'
+                                       );
+        $this->page->render('mainMember_view', $data, null);
     }
 
     public function ldap_to_db()
@@ -42,22 +54,27 @@ class Main extends Controller
         
     }
 
-    /*
+    public function view_ldap_dump()
+    {
+        $results = $this->ldap_model->get_all_users_raw();
+    }
+
+    
     public function drop()
     {
         $this->mongo->remove('users');
         //$this->mongo->delete('users');
     }
-
+    
     public function query()
     {
         $this->mongo->query('users', array('uid' => 'mcg1sean'));
     }
-
+    
     public function update()
     {
         $this->mongo->update('users');
     }
-    */
+    
 }
 ?>

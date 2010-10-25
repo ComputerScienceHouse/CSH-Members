@@ -15,7 +15,6 @@ class MongoDB_Inst
         $this->db = $this->connection->selectDB('csh_members');
 
     }
-
     public function insert_users($collection, $users)
     {
         $users_collection = $this->db->$collection;
@@ -44,7 +43,7 @@ class MongoDB_Inst
     public function query($collection, $query_array)
     {
         $db_collection = $this->db->$collection;
-        $regex = new MongoRegex("/^m/");
+        $regex = new MongoRegex("/^a/");
         $res = $db_collection->find(array('uid' => $regex))->sort(array('uid' => 1))->limit(10);
         foreach($res as $foo)
         {

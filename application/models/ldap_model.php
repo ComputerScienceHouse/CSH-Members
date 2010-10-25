@@ -15,7 +15,7 @@ class Ldap_Model extends CI_Model
         $this->ldap = new Ldap();
         $this->ldap->connect();
 
-        $this->attributes = array('uid', 'homedirectory', 'loginshell', 'nickname',
+        $this->attributes = array('objectclass', 'uid', 'homedirectory', 'loginshell', 'nickname',
                                   'rityear', 'homephone', 'cellphone', 'mail', 'aolscreenname',
                                   'birthday', 'blogurl', 'cn', 'description', 'gecos', 'givenname',
                                   'sn', 'ritdn', 'onfloor', );
@@ -28,10 +28,63 @@ class Ldap_Model extends CI_Model
         $users = array();
         foreach($results as $res)
         {
-            unset($res['objectclass']);
-            unset($res[0]);
+            //unset($res['objectclass']);
+            //unset($res[0]);
             $tmp_array = array();
             //Util::printr($res);
+            foreach($this->attributes as $attr)
+            {
+                if (array_key_exists($attr, $res))
+                {
+                    if ($attr == 'mail')
+                    {
+                        unset($res[$attr]['count']);
+                        $email_list = array();
+                        foreach($res[$attr] as $email)
+                        {
+                            $email_list[] = array('email' => $email);
+                        }
+
+                        $tmp_array[$attr] = $email_list;
+                    }
+                    elseif ($attr == 'objectclass')
+                    {
+                        unset($res[$attr]['count']);
+                        $class_list = array();
+                        foreach($res[$attr] as $class)
+                        {
+                            $class_list[] = array('class' => $class);
+                        }
+
+                        $tmp_array[$attr] = $class_list;
+                    }
+                    else
+                    {
+                        $tmp_array[$attr] = $res[$attr][0];
+                    }
+                }
+                else
+                {
+                    $tmp_array[$attr] = "";
+                }
+            }
+            $users[] = $tmp_array;
+        }
+        //Util::printr($users);
+        return $users;
+    }
+
+    public function get_all_users_raw()
+    {
+        $results = $this->ldap->get_all_users();
+        $users = array();
+        foreach($results as $res)
+        {
+            //unset($res['objectclass']);
+            //unset($res[0]);
+            $tmp_array = array();
+            Util::printr($res);
+            /*
             foreach($this->attributes as $attr)
             {
                 if (array_key_exists($attr, $res))
@@ -52,6 +105,7 @@ class Ldap_Model extends CI_Model
                 }
             }
             $users[] = $tmp_array;
+            */
         }
         //Util::printr($users);
         return $users;
