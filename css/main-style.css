@@ -218,6 +218,20 @@ span.h3-bold {
         padding: 0px 0px 0px 20px;
         font-size: .9em;
     }
+        #leftColLarge .content a {
+            color: #375D81;
+            text-decoration: none;
+        }
+
+        #leftColLarge .content a:visited {
+            color: #375D81;
+            text-decoration: none;
+        }
+        #leftColLarge .content a:hover {
+            color: #ABC8E2;
+            text-decoration: none;
+        }
+
         #leftColLarge .content span.text {
             margin: 0px 0px 0px 0px;
             padding: 0px 0px 0px 0px;

@@ -15,6 +15,34 @@ class Main extends Base_Controller
 
     }
 
+    public function mobile()
+    {
+        $this->load->view('mobile/test_view');
+    }
+
+    public function mobile_members($letter)
+    {
+        $data['users'] = $this->user_model->get_sorted_users('sn', "/^".strtolower($letter)."/i", true);
+
+        $this->load->view('mobile/mainMobileMembers_view', $data);
+
+    }
+
+    public function mobile_profile($uid)
+    {
+        $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
+        $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
+                                        'birthday' => 'Birthday',
+                                        'cn' => 'Common Name',
+                                        'nickname' => 'Nickname',
+                                        'cellphone' => 'Cell Phone',
+                                        'homephone' => 'Home Phone',
+                                        'mail' => 'Email Addresses',
+                                        'blogurl' => 'Website'
+                                       );
+        $this->load->view('mobile/mainMobileProfile_view', $data);
+    }
+
     public function sort_members($letter)
     {
         $users = $this->user_model->get_sorted_users('sn', "/^".strtolower($letter)."/i", true);
@@ -29,6 +57,8 @@ class Main extends Base_Controller
         
         echo json_encode($result_string);
     }
+
+
 
     public function member($uid)
     {

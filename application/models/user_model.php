@@ -58,5 +58,22 @@ class User_Model extends Base_Model
             return $collection->find(array($index => $query));
         }
     }
+
+    public function search($query)
+    {
+        $collection = $this->mongo->db->{$this->user_collection};
+        $query = new MongoRegex("/^".$query."/i");
+        $uid_result = $collection->find(array('$or' => array(array('uid' => $query), array('cn' => $query))))->sort(array('sn' => 1));
+        $cn_result = $collection->find(array('cn' => $query));
+
+        $processed_result = array();
+        
+        foreach($uid_result as $res)
+        {
+            $processed_result[] = $res;
+        }
+
+        return $processed_result;
+    }
 }
 ?>
