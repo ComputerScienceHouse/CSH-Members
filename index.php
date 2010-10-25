@@ -9,6 +9,9 @@ set_include_path(get_include_path() . ':'.$pwd.'/application/controllers');
 
 require_once('Util.php');
 require_once('Page_Framework.php');
+require_once('Ldap.php');
+require_once('Mongodb.php');
+require_once('Mongo_db.php');
 /*
  *---------------------------------------------------------------
  * PHP ERROR REPORTING LEVEL
