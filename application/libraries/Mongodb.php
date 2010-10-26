@@ -44,7 +44,7 @@ class MongoDB_Inst
     {
         $db_collection = $this->db->$collection;
         $regex = new MongoRegex("/^a/");
-        $res = $db_collection->find(array('uid' => $regex))->sort(array('uid' => 1))->limit(10);
+        $res = $db_collection->find($query_array)->sort(array('uid' => 1))->limit(10);
         foreach($res as $foo)
         {
             Util::printr($foo);

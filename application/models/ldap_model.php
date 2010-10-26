@@ -74,6 +74,20 @@ class Ldap_Model extends CI_Model
         return $users;
     }
 
+    public function get_rtps()
+    {
+        $results = $this->ldap->get_rtps();
+        $users = array();
+        //Util::printr($results);
+        unset($results[0]['member']['count']);
+        foreach($results[0]['member'] as $res)
+        {
+            $user = explode("=", $res);
+            $users[] = array('uid' => rtrim($user[1], ',ou'));
+        }
+        return $users;
+    }
+
     public function get_all_users_raw()
     {
         $results = $this->ldap->get_all_users();

@@ -16,13 +16,14 @@
             }
         ?>
     </div>
+</div>
     <div class="heading">
         Results
     </div>
     <div class="content" id="results">
-
     </div>
 </div>
+
 
 
 

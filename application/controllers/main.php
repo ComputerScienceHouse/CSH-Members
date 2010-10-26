@@ -78,27 +78,32 @@ class Main extends Base_Controller
     public function ldap_to_db()
     {
         $results = $this->ldap_model->get_all_users();
-
+        $rtps = $this->ldap_model->get_rtps();
         $this->mongo->insert_users('users', $results);
+        $this->mongo->insert_users('rtps', $rtps);
         //$this->mongo->insert('users', $results);
         
     }
 
     public function view_ldap_dump()
     {
-        $results = $this->ldap_model->get_all_users_raw();
+        
+        Util::printr($results);
     }
 
     
     public function drop()
     {
         $this->mongo->remove('users');
+        $this->mongo->remove('rtps');
         //$this->mongo->delete('users');
     }
     
     public function query()
     {
-        $this->mongo->query('users', array('uid' => 'mcg1sean'));
+        //$this->mongo->query('users', array('uid' => 'adinardi'));
+
+        $this->mongo->query('rtps', array('uid' => 'adinardi'));
     }
     
     public function update()

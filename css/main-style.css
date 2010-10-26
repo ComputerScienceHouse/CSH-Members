@@ -12,7 +12,6 @@ body {
     padding: 0px 0px 0px 0px;
     width: 1000px;
     height: 100px;
-    background: blue;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     -moz-border-radius-bottomleft: 5px;
@@ -23,7 +22,7 @@ body {
     -webkit-border-bottom-right-radius: 5px;
 
     background:
-        #5f8eaf;
+        #780e0e;
 
 }
 
@@ -54,7 +53,7 @@ body {
     }
 
     #header .right a {
-        color: #dfeff6;
+        color: #780e0e;
         text-decoration: none;
     }
 
@@ -119,8 +118,8 @@ span.h3-bold {
     -webkit-border-bottom-left-radius: 15px;
     -webkit-border-bottom-right-radius: 15px;
 
-    background: #e8f3f8;
-    color: #343434;
+    background: #424242;
+    color: #fff;
 
     font-size: .9em;
 }
@@ -209,7 +208,7 @@ span.h3-bold {
         }
 
     #leftColLarge .heading {
-        color: #4b78a5;
+        color: #fff;
     }
 
 
@@ -219,7 +218,7 @@ span.h3-bold {
         font-size: .9em;
     }
         #leftColLarge .content a {
-            color: #375D81;
+            color: #780e0e;
             text-decoration: none;
         }
 
@@ -279,10 +278,11 @@ span.h3-bold {
         #rightColSmall .tabbed {
             margin: 0px 0px 0px 0px;
             padding: 0px 0px 0px 20px;
+            color: #fff;
         }
 
         #rightColSmall .tabbed a {
-            color: #4b78a5;
+            color: #780e0e;
             text-decoration: none;
         }
 

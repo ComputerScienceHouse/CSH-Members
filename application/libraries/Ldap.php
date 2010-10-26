@@ -17,7 +17,7 @@ class Ldap
 
     public function connect()
     {
-       $ldap_address = "ldap.csh.rit.edu";
+        $ldap_address = "ldap.csh.rit.edu";
 
         $this->connection = ldap_connect($ldap_address) or die("Could not connect to {$ldaphost}");
 
@@ -46,11 +46,39 @@ class Ldap
                 $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
                 $entries = ldap_get_entries($this->connection, $result);
                 $binddn = $entries[0]["dn"];
+                
                 //echo "<p>Bind DN found: " . $binddn . "</p>";
                 //echo "<hr />";
                 //Util::printr($entries);
                 //return array('cn' => $this->connection, 'bn' => $bind);
                 unset($entries['count']);
+                return $entries;
+            }
+            else
+            {
+                //echo "not bound";
+                return false;
+            }
+    }
+
+    public function get_rtps()
+    {
+        if($this->bind)
+            {
+                //echo "bound";
+                $basedn = "ou=Groups,dc=csh,dc=rit,dc=edu";
+                $filter = "(|(cn=rtp))";
+
+                $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
+                $entries = ldap_get_entries($this->connection, $result);
+
+                $binddn = $entries[0]["dn"];
+                //Util::printr($binddn);
+                //echo "<p>Bind DN found: " . $binddn . "</p>";
+                //echo "<hr />";
+                //Util::printr($entries);
+                //return array('cn' => $this->connection, 'bn' => $bind);
+                //unset($entries['count']);
                 return $entries;
             }
             else

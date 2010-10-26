@@ -8,12 +8,14 @@ class User_Model extends Base_Model
 {
 
     public $user_collection;
+    public $rtp_collection;
 
     public function  __construct()
     {
         parent::__construct();
 
         $this->user_collection = 'users';
+        $this->rtp_collection = 'rtps';
     }
 
     public function get_all_users()
@@ -74,6 +76,24 @@ class User_Model extends Base_Model
         }
 
         return $processed_result;
+    }
+
+    public function get_rtps()
+    {
+        $collection = $this->mongo->db->{$this->rtp_collection};
+
+        $rtp_uids = $collection->find()->sort(array('uid' => 1));
+
+        $rtp_profiles = array();
+        foreach($rtp_uids as $rtps)
+        {
+            $tmp_collection = $this->mongo->db->{$this->user_collection};
+
+            $rtp_profiles[] = $tmp_collection->findOne(array('uid' => $rtps['uid']));
+        }
+
+        //Util::printr($rtp_profiles);
+        return $rtp_profiles;
     }
 }
 ?>
