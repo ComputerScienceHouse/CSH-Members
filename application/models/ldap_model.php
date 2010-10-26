@@ -18,7 +18,7 @@ class Ldap_Model extends CI_Model
         $this->attributes = array('objectclass', 'uid', 'homedirectory', 'loginshell', 'nickname',
                                   'rityear', 'homephone', 'cellphone', 'mail', 'aolscreenname',
                                   'birthday', 'blogurl', 'cn', 'description', 'gecos', 'givenname',
-                                  'sn', 'ritdn', 'onfloor', );
+                                  'sn', 'ritdn', 'onfloor', 'drinkAdmin');
 
     }
 

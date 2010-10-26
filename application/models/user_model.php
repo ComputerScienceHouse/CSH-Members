@@ -95,5 +95,17 @@ class User_Model extends Base_Model
         //Util::printr($rtp_profiles);
         return $rtp_profiles;
     }
+
+    public function get_drinkadmins()
+    {
+        $collection = $this->mongo->db->{$this->user_collection};
+
+        $results = $collection->find()->sort(array('uid' => 1));
+
+
+        //Util::printr($rtp_profiles);
+        return $results;
+    }
 }
+
 ?>

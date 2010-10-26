@@ -70,7 +70,8 @@ class Main extends Base_Controller
                                         'cellphone' => 'Cell Phone',
                                         'homephone' => 'Home Phone',
                                         'mail' => 'Email Addresses',
-                                        'blogurl' => 'Website'
+                                        'blogurl' => 'Website',
+                                        'drinkAdmin' => 'Drink Admin'
                                        );
         $this->page->render('mainMember_view', $data, null);
     }
@@ -87,7 +88,7 @@ class Main extends Base_Controller
 
     public function view_ldap_dump()
     {
-        
+        $results = $this->ldap_model->get_all_users();
         Util::printr($results);
     }
 

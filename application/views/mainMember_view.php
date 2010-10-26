@@ -4,7 +4,7 @@
     </script>
     <h1><?=$user['cn']?></h1>
     <?php
-
+        Util::printr($user);
         foreach($display_fields as $field => $display)
         {
             echo '<div class="heading">'.$display.'</div>';
