@@ -31,6 +31,11 @@
                             echo '<span class="foo"><a href="mailto:' . $email['email'] . '">' . $email['email'] . '</a></span><br>';
                         }
                     }
+                    elseif($field == 'cellphone' || $field == 'homephone')
+                    {
+                        $phone = str_replace('-', '', $user[$field]);
+                        echo '<span class="foo">'.$phone.'</span>';
+                    }
                     else
                     {
                         echo '<span class="foo">'.$user[$field].'</span>';

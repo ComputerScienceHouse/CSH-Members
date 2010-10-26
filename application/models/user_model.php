@@ -9,6 +9,7 @@ class User_Model extends Base_Model
 
     public $user_collection;
     public $rtp_collection;
+    public $eboard_collection;
 
     public function  __construct()
     {
@@ -16,6 +17,7 @@ class User_Model extends Base_Model
 
         $this->user_collection = 'users';
         $this->rtp_collection = 'rtps';
+        $this->eboard_collection = 'eboard';
     }
 
     public function get_all_users()
@@ -94,6 +96,24 @@ class User_Model extends Base_Model
 
         //Util::printr($rtp_profiles);
         return $rtp_profiles;
+    }
+
+    public function get_eboard()
+    {
+        $collection = $this->mongo->db->{$this->eboard_collection};
+
+        $eboard_uids = $collection->find()->sort(array('uid' => 1));
+
+        $eboard_profiles = array();
+        foreach($eboard_uids as $eboard)
+        {
+            $tmp_collection = $this->mongo->db->{$this->user_collection};
+
+            $eboard_profiles[] = $tmp_collection->findOne(array('uid' => $eboard['uid']));
+        }
+
+        //Util::printr($rtp_profiles);
+        return $eboard_profiles;
     }
 
     public function get_drinkadmins()

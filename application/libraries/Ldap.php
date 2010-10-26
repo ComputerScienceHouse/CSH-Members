@@ -61,19 +61,19 @@ class Ldap
             }
     }
 
-    public function get_rtps()
+    public function get_group($cn)
     {
         if($this->bind)
             {
                 //echo "bound";
                 $basedn = "ou=Groups,dc=csh,dc=rit,dc=edu";
-                $filter = "(|(cn=rtp))";
+                $filter = "(|(cn=".$cn."))";
 
                 $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
                 $entries = ldap_get_entries($this->connection, $result);
 
                 $binddn = $entries[0]["dn"];
-                //Util::printr($binddn);
+                Util::printr($binddn);
                 //echo "<p>Bind DN found: " . $binddn . "</p>";
                 //echo "<hr />";
                 //Util::printr($entries);
@@ -87,6 +87,7 @@ class Ldap
                 return false;
             }
     }
+
 
 }
 ?>

@@ -74,9 +74,23 @@ class Ldap_Model extends CI_Model
         return $users;
     }
 
-    public function get_rtps()
+    public function get_group($cn)
     {
-        $results = $this->ldap->get_rtps();
+        $results = $this->ldap->get_group($cn);
+        $users = array();
+        //Util::printr($results);
+        unset($results[0]['member']['count']);
+        foreach($results[0]['member'] as $res)
+        {
+            $user = explode("=", $res);
+            $users[] = array('uid' => rtrim($user[1], ',ou'));
+        }
+        return $users;
+    }
+
+    public function get_eboard()
+    {
+        $results = $this->ldap->get_eboard();
         $users = array();
         //Util::printr($results);
         unset($results[0]['member']['count']);
@@ -97,7 +111,7 @@ class Ldap_Model extends CI_Model
             //unset($res['objectclass']);
             //unset($res[0]);
             $tmp_array = array();
-            Util::printr($res);
+            //Util::printr($res);
             /*
             foreach($this->attributes as $attr)
             {

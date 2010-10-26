@@ -17,14 +17,33 @@ class Main extends Base_Controller
 
     public function mobile()
     {
-        $this->load->view('mobile/test_view');
+        $this->load->view('mobile/mainMobile_view');
     }
 
-    public function mobile_members($letter)
+    public function mobile_members()
+    {
+        $this->load->view('mobile/mainMobileMembers_view');
+    }
+
+    public function mobile_eboard()
+    {
+        $data['users'] = $this->user_model->get_eboard();
+
+        $this->load->view('mobile/mainMobileMembersSorted_view', $data);
+    }
+
+    public function mobile_rtps()
+    {
+        $data['users'] = $this->user_model->get_rtps();
+
+        $this->load->view('mobile/mainMobileMembersSorted_view', $data);
+    }
+
+    public function mobile_members_sorted($letter)
     {
         $data['users'] = $this->user_model->get_sorted_users('sn', "/^".strtolower($letter)."/i", true);
 
-        $this->load->view('mobile/mainMobileMembers_view', $data);
+        $this->load->view('mobile/mainMobileMembersSorted_view', $data);
 
     }
 
@@ -79,16 +98,18 @@ class Main extends Base_Controller
     public function ldap_to_db()
     {
         $results = $this->ldap_model->get_all_users();
-        $rtps = $this->ldap_model->get_rtps();
+        $rtps = $this->ldap_model->get_group('rtp');
+        $eboard = $this->ldap_model->get_group('eboard');
         $this->mongo->insert_users('users', $results);
         $this->mongo->insert_users('rtps', $rtps);
+        $this->mongo->insert_users('eboard', $eboard);
         //$this->mongo->insert('users', $results);
         
     }
 
     public function view_ldap_dump()
     {
-        $results = $this->ldap_model->get_all_users();
+        $results = $this->ldap_model->get_group('eboard');
         Util::printr($results);
     }
 
@@ -97,6 +118,7 @@ class Main extends Base_Controller
     {
         $this->mongo->remove('users');
         $this->mongo->remove('rtps');
+        $this->mongo->remove('eboard');
         //$this->mongo->delete('users');
     }
     

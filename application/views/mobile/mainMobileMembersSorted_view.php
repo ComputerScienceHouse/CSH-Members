@@ -6,24 +6,25 @@
         <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
     </head>
-    <body> 
+    <body>
         <div data-role="page">
 
             <div data-role="header">
-                <h1>CSH Members <i>Mobile</i></h1>
+                <h1>CSH Members</h1>
             </div><!-- /header -->
 
             <div data-role="content" class="ui-content" role="main">
                 <ul data-role="listview" class="ui-listview" role="listbox">
                     <?php
-                    for ($i = 65; $i < 91; $i++)
+                    foreach($users as $user)
                     {
-                        echo '<li><a href="'.site_url('main/mobile_members_sorted/'.chr($i)).'">'.chr($i).'</a></li>';
-                        //echo '<a href="#" onClick="getContent(\'' . chr($i) . '\', 1);">' . chr($i) . '</a>';
+                        echo '<li><a href="'.site_url('main/mobile_profile/'.$user['uid']).'">'.$user['sn'].', '.$user['givenname'].'</a></li>';
                     }
                     ?>
+
                 </ul>
             </div><!-- /content -->
+
             <div data-role="footer">
                 <h4>Page Footer</h4>
             </div><!-- /header -->

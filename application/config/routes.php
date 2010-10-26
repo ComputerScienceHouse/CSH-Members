@@ -33,6 +33,7 @@
 */
 
 $route['default_controller'] = "main";
+$route['mobile'] = "main/mobile";
 
 
 /* End of file routes.php */
