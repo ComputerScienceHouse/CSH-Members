@@ -53,12 +53,12 @@ body {
     }
 
     #header .right a {
-        color: #780e0e;
+        color: #e0e0e0;
         text-decoration: none;
     }
 
     #header .right a:visited {
-        color: #dfeff6;
+        color: #e0e0e0;
         text-decoration: none;
     }
 
@@ -223,11 +223,11 @@ span.h3-bold {
         }
 
         #leftColLarge .content a:visited {
-            color: #375D81;
+            color: #780e0e;
             text-decoration: none;
         }
         #leftColLarge .content a:hover {
-            color: #ABC8E2;
+            color: #bb1717;
             text-decoration: none;
         }
 
@@ -253,17 +253,17 @@ span.h3-bold {
         }
 
         #leftColLarge .table-style tr a {
-            color: #375D81;
+            color: #780e0e;
             text-decoration: none;
         }
 
         #leftColLarge .table-style tr a:visited {
-            color: #375D81;
+            color: #780e0e;
             text-decoration: none;
         }
 
         #leftColLarge .table-style tr a:hover {
-            color: #ABC8E2;
+            color: #bb1717;
             text-decoration: none;
         }
 
@@ -287,11 +287,11 @@ span.h3-bold {
         }
 
         #rightColSmall .tabbed a:visited {
-            color: #4b78a5;
+            color: #780e0e;
             text-decoration: none;
         }
 
         #rightColSmall .tabbed a:hover {
-            color: #5f8eaf;
+            color: #bb1717;
             text-decoration: none;
         }
