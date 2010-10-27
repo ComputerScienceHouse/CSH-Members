@@ -15,6 +15,11 @@ class Main extends Base_Controller
 
     }
 
+    public function alt_mobile()
+    {
+        $this->load->view('mobile/altMobile_view');
+    }
+
     public function mobile()
     {
         $this->load->view('mobile/mainMobile_view');

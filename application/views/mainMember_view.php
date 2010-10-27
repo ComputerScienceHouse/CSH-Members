@@ -16,6 +16,14 @@
                     echo '<a href="mailto:'.$email['email'].'">'.$email['email'].'</a><br>';
                 }
             }
+            elseif($field == 'birthday')
+            {
+                echo '<span class="foo">'.Util::format_birthday($user[$field]).'</span>';
+            }
+            elseif($field == 'aolscreenname')
+            {
+                echo '<span class="foo"><a href="aim:goim?screenname='.$user[$field].'">'.$user[$field].'</a></span>';
+            }
             else
             {
                 echo $user[$field];

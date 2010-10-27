@@ -83,7 +83,8 @@ class Ldap_Model extends CI_Model
         foreach($results[0]['member'] as $res)
         {
             $user = explode("=", $res);
-            $users[] = array('uid' => rtrim($user[1], ',ou'));
+            $users[] = array('uid' => substr($user[1], 0, (strlen($user[1]) - 3)));
+            //$users[] = array('uid' => rtrim($user[1], ',ou'));
         }
         return $users;
     }

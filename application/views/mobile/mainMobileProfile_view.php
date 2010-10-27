@@ -36,6 +36,10 @@
                         $phone = str_replace('-', '', $user[$field]);
                         echo '<span class="foo">'.$phone.'</span>';
                     }
+                    elseif($field == 'birthday')
+                    {
+                        echo '<span class="foo">'.Util::format_birthday($user[$field]).'</span>';
+                    }
                     else
                     {
                         echo '<span class="foo">'.$user[$field].'</span>';
