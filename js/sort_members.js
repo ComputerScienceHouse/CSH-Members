@@ -7,8 +7,26 @@ Ext.onReady(function(){
 });
 
 $(document).ready(function(){
+    //init_bindings();
+    $('a.foooooobar').live('mouseover mouseout', function(event){
+       if(event.type == 'mouseover')
+       {
+           console.log('in');
+       }
+       else
+       {
+           console.log('out');
+       }
+    });
 
+    $('a.sort_letter').click(function(){
+        console.log($(this).text());
+        $('#member_results').load(update_url + '/' + $(this).text(), function(){
+            console.log('loaded?');
+        });
+    });
 });
+
 
 function getContent(letter, type)
 {
@@ -19,7 +37,9 @@ function getContent(letter, type)
                url: update_url + '/' + letter,
                success: function(response, opts){
                    var obj = Ext.decode(response.responseText);
-                   document.getElementById('member_results').innerHTML = obj;
+                   var test = $(obj);
+                   $('#member_results').append(test);
+                   //document.getElementById('member_results').appendChild(obj);
                },
                failure: function(response, opts){
                    alert('data fetch failed');

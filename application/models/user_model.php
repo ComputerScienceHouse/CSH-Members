@@ -30,6 +30,16 @@ class User_Model extends Base_Model
         return $results;
     }
 
+    public function get_all_users_shit()
+    {
+        // WHAT THE FUCK PHP?!?!?!?!?!?!
+        $collection = $this->mongo->db->{$this->user_collection};
+
+        $results = $collection->find(array('rityear' => array('$lte' => '3')))->sort(array('uid' => 1));
+
+        return $results;
+    }
+
     public function get_sorted_users($index, $query, $is_regex = false)
     {
         $collection = $this->mongo->db->{$this->user_collection};

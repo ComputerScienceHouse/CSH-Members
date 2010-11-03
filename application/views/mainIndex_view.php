@@ -7,10 +7,12 @@
         Members Alphabetically
     </div>
     <div class="content">
+        <a class="foooooobar" href="#">Foo</a>
         <?php
             for($i = 65; $i < 91; $i++)
             {
-                echo '<a href="#" onClick="getContent(\''.chr($i).'\', 1);">'.chr($i).'</a>';
+                //echo '<a class="sort_letter" href="#" onClick="getContent(\''.chr($i).'\', 1);">'.chr($i).'</a>';
+                echo '<a class="sort_letter" href="#" value="fooobar">'.chr($i).'</a>';
                 if($i == 90)
                 {
                     echo '<br>';

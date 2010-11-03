@@ -6,6 +6,8 @@ class Main extends Base_Controller
     public function  __construct()
     {
         parent::__construct();
+        //Util::printr($_SERVER);
+        
     }
 
     public function index()
@@ -13,6 +15,24 @@ class Main extends Base_Controller
         $this->page->load_javascript(site_url('js/sort_members.js'));
         $this->page->render('mainIndex_view', '', null);
 
+    }
+
+    public function shit_data()
+    {
+        $users = $this->user_model->get_all_users();
+        
+        foreach($users as $user)
+        {
+
+            $dir = explode("/", $user['homedirectory']);
+            //Util::printr($dir);
+            if(@$dir[2] == 'u14' || @$dir[2] == 'u15' || @$dir[2] == 'u16' || @$dir[2] == 'u17' || @$dir[2] == 'u18')
+            {
+                echo "INSERT INTO users(username, full_name, is_pimp) VALUES('".$user['uid']."', '".$user['cn']."', 0);<br>";
+            }
+            //echo '"INSERT INTO users(username, full_name'
+        }
+        //Util::printr($this->ldap_model->get_all_users_raw());
     }
 
     public function alt_mobile()
@@ -56,6 +76,7 @@ class Main extends Base_Controller
     {
         $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
         $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
+                                        'twittername' => 'Twitter',
                                         'birthday' => 'Birthday',
                                         'cn' => 'Common Name',
                                         'nickname' => 'Nickname',
@@ -74,12 +95,13 @@ class Main extends Base_Controller
         foreach($users as $user)
         {
             $result_string .= '<tr>';
-            $result_string .= '<td><a href="'.site_url('main/member/'.$user['uid']).'">'.$user['sn'].', '. $user['givenname'].'</a></td>';
+            $result_string .= '<td><a class="foooooobar" href="'.site_url('main/member/'.$user['uid']).'">'.$user['sn'].', '. $user['givenname'].'</a></td>';
             $result_string .= '<td>'.$user['uid'].'</td>';
             $result_string .= '</tr>';
         }
         
-        echo json_encode($result_string);
+        //echo json_encode($result_string);
+        echo $result_string;
     }
 
 
@@ -88,6 +110,7 @@ class Main extends Base_Controller
     {
         $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
         $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
+                                        'twittername' => 'Twitter',
                                         'birthday' => 'Birthday',
                                         'cn' => 'Common Name',
                                         'nickname' => 'Nickname',
@@ -98,45 +121,6 @@ class Main extends Base_Controller
                                         'drinkAdmin' => 'Drink Admin'
                                        );
         $this->page->render('mainMember_view', $data, null);
-    }
-
-    public function ldap_to_db()
-    {
-        $results = $this->ldap_model->get_all_users();
-        $rtps = $this->ldap_model->get_group('rtp');
-        $eboard = $this->ldap_model->get_group('eboard');
-        $this->mongo->insert_users('users', $results);
-        $this->mongo->insert_users('rtps', $rtps);
-        $this->mongo->insert_users('eboard', $eboard);
-        //$this->mongo->insert('users', $results);
-        
-    }
-
-    public function view_ldap_dump()
-    {
-        $results = $this->ldap_model->get_group('eboard');
-        Util::printr($results);
-    }
-
-    
-    public function drop()
-    {
-        $this->mongo->remove('users');
-        $this->mongo->remove('rtps');
-        $this->mongo->remove('eboard');
-        //$this->mongo->delete('users');
-    }
-    
-    public function query()
-    {
-        //$this->mongo->query('users', array('uid' => 'adinardi'));
-
-        $this->mongo->query('rtps', array('uid' => 'adinardi'));
-    }
-    
-    public function update()
-    {
-        $this->mongo->update('users');
     }
     
 }

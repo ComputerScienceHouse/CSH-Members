@@ -3,6 +3,7 @@
     <head>
         <title>Page Title</title>
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
+        <link rel="stylesheet" href="<?=site_url('css/mobile-style.css')?>">
         <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
         <style>
@@ -23,27 +24,34 @@
                 <?php
                 foreach ($display_fields as $field => $display)
                 {
-                    echo '<h4>' . $display . '</h4>';
+                    echo '<span class="heading">' . $display . '</span>: ';
                     if ($field == 'mail')
                     {
+                        echo '<br><ul>';
                         foreach ($user[$field] as $email)
                         {
-                            echo '<span class="foo"><a href="mailto:' . $email['email'] . '">' . $email['email'] . '</a></span><br>';
+                            echo '<li><a href="mailto:' . $email['email'] . '" rel=external>' . $email['email'] . '</a></li>';
                         }
+                        echo '</ul>';
                     }
                     elseif($field == 'cellphone' || $field == 'homephone')
                     {
                         $phone = str_replace('-', '', $user[$field]);
-                        echo '<span class="foo">'.$phone.'</span>';
+                        echo '<a href="tel:+'.$phone.'" rel=external>'.$phone.'</a></span><br>';
                     }
                     elseif($field == 'birthday')
                     {
-                        echo '<span class="foo">'.Util::format_birthday($user[$field]).'</span>';
+                        echo '<span class="foo">'.Util::format_birthday($user[$field]).'</span><br>';
+                    }
+                    elseif($field == 'aolscreenname')
+                    {
+                        echo '<span class="foo"><a href="aim:goim?screenname='.$user[$field].'" rel=external>'.$user[$field].'</a></span><br>';
                     }
                     else
                     {
-                        echo '<span class="foo">'.$user[$field].'</span>';
+                        echo '<span class="foo">'.$user[$field].'</span><br>';
                     }
+                    echo '<br>';
                 }
                 ?>
             </div><!-- /content -->

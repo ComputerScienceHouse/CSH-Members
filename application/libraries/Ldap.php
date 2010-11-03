@@ -37,28 +37,28 @@ class Ldap
 
     public function get_all_users()
     {
-        if($this->bind)
-            {
-                //echo "bound";
-                $basedn = "ou=Users,dc=csh,dc=rit,dc=edu";
-                $filter = "(|(uid=*))";
+        if ($this->bind)
+        {
+            //echo "bound";
+            $basedn = "ou=Users,dc=csh,dc=rit,dc=edu";
+            $filter = "(|(uid=*))";
 
-                $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
-                $entries = ldap_get_entries($this->connection, $result);
-                $binddn = $entries[0]["dn"];
-                
-                //echo "<p>Bind DN found: " . $binddn . "</p>";
-                //echo "<hr />";
-                //Util::printr($entries);
-                //return array('cn' => $this->connection, 'bn' => $bind);
-                unset($entries['count']);
-                return $entries;
-            }
-            else
-            {
-                //echo "not bound";
-                return false;
-            }
+            $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
+            $entries = ldap_get_entries($this->connection, $result);
+            $binddn = $entries[0]["dn"];
+
+            //echo "<p>Bind DN found: " . $binddn . "</p>";
+            //echo "<hr />";
+            //Util::printr($entries);
+            //return array('cn' => $this->connection, 'bn' => $bind);
+            unset($entries['count']);
+            return $entries;
+        }
+        else
+        {
+            //echo "not bound";
+            return false;
+        }
     }
 
     public function get_group($cn)
@@ -73,12 +73,6 @@ class Ldap
                 $entries = ldap_get_entries($this->connection, $result);
 
                 $binddn = $entries[0]["dn"];
-                Util::printr($binddn);
-                //echo "<p>Bind DN found: " . $binddn . "</p>";
-                //echo "<hr />";
-                //Util::printr($entries);
-                //return array('cn' => $this->connection, 'bn' => $bind);
-                //unset($entries['count']);
                 return $entries;
             }
             else

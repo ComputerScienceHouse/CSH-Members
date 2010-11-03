@@ -16,6 +16,15 @@ class Util
 
         return $month."/".$day."/".$year;
     }
+
+    /**
+     * To be used with daemon classes that take stdout and write it to a log
+     * @param <type> $log_text
+     */
+    public static function log($log_text)
+    {
+        echo date(DATE_RFC822).": ".$log_text."\n";
+    }
 }
 
 ?>

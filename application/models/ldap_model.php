@@ -18,7 +18,7 @@ class Ldap_Model extends CI_Model
         $this->attributes = array('objectclass', 'uid', 'homedirectory', 'loginshell', 'nickname',
                                   'rityear', 'homephone', 'cellphone', 'mail', 'aolscreenname',
                                   'birthday', 'blogurl', 'cn', 'description', 'gecos', 'givenname',
-                                  'sn', 'ritdn', 'onfloor', 'drinkAdmin');
+                                  'sn', 'ritdn', 'onfloor', 'drinkAdmin', 'twittername');
 
     }
 
@@ -74,6 +74,44 @@ class Ldap_Model extends CI_Model
         return $users;
     }
 
+    public function get_all_users_test()
+    {
+        $results = $this->ldap->get_all_users();
+        $users = array();
+        foreach($results as $res)
+        {
+            //unset($res['objectclass']);
+            //unset($res[0]);
+            $tmp_array = array();
+            //Util::printr($res);
+            foreach($this->attributes as $attr)
+            {
+                unset($res[$attr]['count']);
+                if (array_key_exists($attr, $res))
+                {
+                    if(is_array($res[$attr]))
+                    {
+                        $class_list = array();
+                        foreach($res[$attr] as $elem)
+                        {
+                            $class_list[] = array('class' => $elem);
+                        }
+
+                        $tmp_array[$attr] = $class_list;
+                    }
+                    //$tmp_array[$attr] =
+                }
+                else
+                {
+                    $tmp_array[$attr] = array(array('class' => ''));
+                }
+            }
+            $users[] = $tmp_array;
+        }
+        //Util::printr($users);
+        return $users;
+    }
+
     public function get_group($cn)
     {
         $results = $this->ldap->get_group($cn);
@@ -112,6 +150,7 @@ class Ldap_Model extends CI_Model
             //unset($res['objectclass']);
             //unset($res[0]);
             $tmp_array = array();
+            $users[] = $res;
             //Util::printr($res);
             /*
             foreach($this->attributes as $attr)
