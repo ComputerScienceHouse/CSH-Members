@@ -7,6 +7,11 @@
     <h1><?=$user['cn']?></h1>
     <?php
         //Util::printr($user);
+        $content_editable = '';
+        if($this->uri->segment(1) == 'me')
+        {
+            $content_editable = "CONTENTEDITABLE";
+        }
         foreach($display_fields as $field => $display)
         {
             echo '<div class="heading">'.$display.'</div>';
@@ -20,17 +25,17 @@
             }
             elseif($field == 'birthday')
             {
-                echo '<div id="'.$field.'" class="content" CONTENTEDITABLE>';
+                echo '<div id="'.$field.'" class="content">';
                 echo '<span class="foo">'.Util::format_birthday($user[$field]).'</span>';
             }
             elseif($field == 'aolscreenname')
             {
-                echo '<div id="'.$field.'" class="content" CONTENTEDITABLE>';
+                echo '<div id="'.$field.'" class="content" '.$content_editable.'>';
                 echo '<span class="foo"><a href="aim:goim?screenname='.$user[$field].'">'.$user[$field].'</a></span>';
             }
             else
             {
-                echo '<div id="'.$field.'" class="content" CONTENTEDITABLE>';
+                echo '<div id="'.$field.'" class="content" '.$content_editable.'>';
                 echo $user[$field];
             }
             echo '</div>';

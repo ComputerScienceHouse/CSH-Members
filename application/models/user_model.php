@@ -20,6 +20,28 @@ class User_Model extends Base_Model
         $this->eboard_collection = 'eboard';
     }
 
+    public function insert_eboard($eboard)
+    {
+        $collection = $this->mongo->db->{$this->eboard_collection};
+        foreach($eboard as $e)
+        {
+            $collection->insert($e, true);
+        }
+        
+    }
+    
+    public function insert_rtps($rtps)
+    {
+        $collection = $this->mongo->db->{$this->rtp_collection};
+        foreach($rtps as $rtp)
+        {
+            $collection->insert($rtp, true);
+        }
+        
+    }
+
+
+
     
 
     public function get_all_users()

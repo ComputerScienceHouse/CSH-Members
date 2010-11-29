@@ -12,7 +12,7 @@ class Base_Controller extends Controller
     public function  __construct()
     {
         parent::Controller();
-
+        //Util::printr($GLOBALS);
         $this->page = new Page_Framework();
         $this->page->load_javascript('https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js');
         $this->load->model('ldap_model');

@@ -25,11 +25,21 @@ class Main extends Base_Controller
 
     public function seed()
     {
-        $users = $this->ldap_model->get_all_users();
+        //$users = $this->ldap_model->get_all_users();
 
         //Util::printr($users);
 
         //$this->mongo->insert_users('users', $users);
+
+        //$eboard = $this->ldap_model->get_eboard();
+        //Util::printr($eboard);
+        //$this->user_model->insert_eboard($eboard);
+
+        //$rtps = $this->ldap_model->get_group('rtp');
+        //Util::printr($rtps);
+        //$this->user_model->insert_rtps($rtps);
+
+
     }
 
     public function delete_all()

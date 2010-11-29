@@ -7,7 +7,6 @@
         Members Alphabetically
     </div>
     <div class="content">
-        <a class="foooooobar" href="#">Foo</a>
         <?php
             for($i = 65; $i < 91; $i++)
             {

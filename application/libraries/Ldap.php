@@ -8,13 +8,28 @@ class Ldap
 
     public function __construct()
     {
+        //Util::printr($GLOBALS);
+        $krb_index = '';
+        if(array_key_exists('KRB5CCNAME', $_SERVER))
+        {
+            $krb_index = 'KRB5CCNAME';
+        }
+        else if(array_key_exists('REDIRECT_KRB5CCNAME', $_SERVER))
+        {
+            $krb_index = 'REDIRECT_KRB5CCNAME';
+        }
+        else
+        {
+
+        }
+
         ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, 3);
         $this->connection = ldap_connect('ldap://ldap.csh.rit.edu');
 
         ldap_bind($this->connection) or die("Could not bind to LDAP 1: " . error());
-        if (isset($_SERVER["REDIRECT_KRB5CCNAME"]))
+        if (isset($_SERVER[$krb_index]))
         {
-            putenv("KRB5CCNAME=" . $_SERVER["REDIRECT_KRB5CCNAME"]);
+            putenv("KRB5CCNAME=" . $_SERVER[$krb_index]);
             ldap_sasl_bind($this->connection, "", "", "GSSAPI") or die("Could not bind to LDAP 2: ");
         }
         else

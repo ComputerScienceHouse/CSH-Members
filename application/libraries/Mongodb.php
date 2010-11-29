@@ -7,17 +7,21 @@ class MongoDB_Inst
 {
     public $connection;
     public $db;
+    public $users;
 
     public function  __construct()
     {
-        $this->connection = new Mongo("mongodb://memberprofiles.csh.rit.edu:27017");
-        
+        //"mongodb://memberprofiles.csh.rit.edu:27017"
+        $this->connection = new Mongo('mongodb://mcg1sean:summertimerave@localhost:27017/csh_members');
+        //$this->connection->authenticate("mcg1sean", "summertimerave");
         $this->db = $this->connection->selectDB('csh_members');
+        //$this->connection->authenticate('mcg1sean', 'summertimerave');
+        $this->users = 'users';
 
     }
     public function insert_users($collection, $users)
     {
-        $users_collection = $this->db->$collection;
+        $users_collection = $this->db->{$collection};
 
         foreach($users as $user)
         {
@@ -35,7 +39,7 @@ class MongoDB_Inst
 
     public function remove($collection)
     {
-        $db_collection = $this->db->$collection;
+        $db_collection = $this->db->{$collection};
 
         $db_collection->remove();
     }

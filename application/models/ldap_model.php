@@ -143,9 +143,10 @@ class Ldap_Model extends CI_Model
         return $users;
     }
 
+    
     public function get_eboard()
     {
-        $results = $this->ldap->get_eboard();
+        $results = $this->ldap->get_group('eboard');
         $users = array();
         //Util::printr($results);
         unset($results[0]['member']['count']);
