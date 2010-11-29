@@ -13,13 +13,29 @@ class Ldap_Model extends CI_Model
     {
         parent::CI_Model();
         $this->ldap = new Ldap();
-        $this->ldap->connect();
 
         $this->attributes = array('objectclass', 'uid', 'homedirectory', 'loginshell', 'nickname',
                                   'rityear', 'homephone', 'cellphone', 'mail', 'aolscreenname',
                                   'birthday', 'blogurl', 'cn', 'description', 'gecos', 'givenname',
                                   'sn', 'ritdn', 'onfloor', 'drinkAdmin', 'twittername');
 
+    }
+
+    public function update_field($data)
+    {
+        $field[$data['field']][0] = $data['new_value'];
+        $dn = 'uid='.$data['uid'].",ou=Users,dc=csh,dc=rit,dc=edu";
+        $res = ldap_mod_replace($this->ldap->connection, $dn, $field);
+
+        if($res)
+        {
+            return 'success!';
+
+        }
+        else
+        {
+            return 'fail!';
+        }
     }
 
     public function get_all_users()

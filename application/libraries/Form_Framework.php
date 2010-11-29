@@ -15,7 +15,7 @@ class Form_Framework
 
         $form[] = '<form id="search_form">';
         $form[] = self::div_wrap('create-new-container', array($search_text_label, $search_text));
-        $form[] = self::div_wrap('create-new-container', array('<br><input type="submit" value="Submit" id="submit_search"'));
+        $form[] = self::div_wrap('create-new-container', array('<br><input type="submit" value="Submit" id="submit_search">'));
         $form[] = form_close();
 
 

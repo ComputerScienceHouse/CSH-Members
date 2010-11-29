@@ -10,7 +10,7 @@ class MongoDB_Inst
 
     public function  __construct()
     {
-        $this->connection = new Mongo();
+        $this->connection = new Mongo("mongodb://memberprofiles.csh.rit.edu:27017");
         
         $this->db = $this->connection->selectDB('csh_members');
 

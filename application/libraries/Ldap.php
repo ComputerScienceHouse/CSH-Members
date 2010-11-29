@@ -1,87 +1,68 @@
 <?php
+
 class Ldap
 {
 
     public $connection;
     public $bind;
 
-    public function  __construct()
+    public function __construct()
     {
+        ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+        $this->connection = ldap_connect('ldap://ldap.csh.rit.edu');
 
-    }
-
-    public function  __destruct()
-    {
-
-    }
-
-    public function connect()
-    {
-        $ldap_address = "ldap.csh.rit.edu";
-
-        $this->connection = ldap_connect($ldap_address) or die("Could not connect to {$ldaphost}");
-
-        $dn = "uid=mcg1sean,ou=Users,dc=csh,dc=rit,dc=edu";
-        $pass = "summertimerave";
-        
-        if($this->connection)
+        ldap_bind($this->connection) or die("Could not bind to LDAP 1: " . error());
+        if (isset($_SERVER["REDIRECT_KRB5CCNAME"]))
         {
-            $this->bind = ldap_bind($this->connection, $dn, $pass);
-            return $this->connection;
+            putenv("KRB5CCNAME=" . $_SERVER["REDIRECT_KRB5CCNAME"]);
+            ldap_sasl_bind($this->connection, "", "", "GSSAPI") or die("Could not bind to LDAP 2: ");
         }
         else
         {
-            return false;
+            echo "FATAL ERROR: WEBAUTH inproperly configured (missing KRB5CCNAME).";
+            die(0);
         }
+
+        return $this->connection;
+    }
+
+    public function __destruct()
+    {
+
     }
 
     public function get_all_users()
     {
-        if ($this->bind)
-        {
-            //echo "bound";
-            $basedn = "ou=Users,dc=csh,dc=rit,dc=edu";
-            $filter = "(|(uid=*))";
 
-            $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
-            $entries = ldap_get_entries($this->connection, $result);
-            $binddn = $entries[0]["dn"];
+        $basedn = "ou=Users,dc=csh,dc=rit,dc=edu";
+        $filter = "(|(uid=*))";
 
-            //echo "<p>Bind DN found: " . $binddn . "</p>";
-            //echo "<hr />";
-            //Util::printr($entries);
-            //return array('cn' => $this->connection, 'bn' => $bind);
-            unset($entries['count']);
-            return $entries;
-        }
-        else
-        {
-            //echo "not bound";
-            return false;
-        }
+        $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
+        $entries = ldap_get_entries($this->connection, $result);
+        $binddn = $entries[0]["dn"];
+
+        //echo "<p>Bind DN found: " . $binddn . "</p>";
+        //echo "<hr />";
+        //Util::printr($entries);
+        //return array('cn' => $this->connection, 'bn' => $bind);
+        unset($entries['count']);
+        return $entries;
     }
 
     public function get_group($cn)
     {
-        if($this->bind)
-            {
-                //echo "bound";
-                $basedn = "ou=Groups,dc=csh,dc=rit,dc=edu";
-                $filter = "(|(cn=".$cn."))";
 
-                $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
-                $entries = ldap_get_entries($this->connection, $result);
+        //echo "bound";
+        $basedn = "ou=Groups,dc=csh,dc=rit,dc=edu";
+        $filter = "(|(cn=" . $cn . "))";
 
-                $binddn = $entries[0]["dn"];
-                return $entries;
-            }
-            else
-            {
-                //echo "not bound";
-                return false;
-            }
+        $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
+        $entries = ldap_get_entries($this->connection, $result);
+
+        $binddn = $entries[0]["dn"];
+        return $entries;
     }
 
-
 }
+
 ?>

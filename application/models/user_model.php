@@ -20,6 +20,8 @@ class User_Model extends Base_Model
         $this->eboard_collection = 'eboard';
     }
 
+    
+
     public function get_all_users()
     {
         // WHAT THE FUCK PHP?!?!?!?!?!?!

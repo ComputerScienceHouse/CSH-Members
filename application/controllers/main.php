@@ -17,6 +17,26 @@ class Main extends Base_Controller
 
     }
 
+    public function test()
+    {
+        Util::printr($_REQUEST);
+        Util::printr($_SERVER);
+    }
+
+    public function seed()
+    {
+        $users = $this->ldap_model->get_all_users();
+
+        //Util::printr($users);
+
+        //$this->mongo->insert_users('users', $users);
+    }
+
+    public function delete_all()
+    {
+        $this->mongo->remove('users');
+    }
+
     public function shit_data()
     {
         $users = $this->user_model->get_all_users();
@@ -74,6 +94,7 @@ class Main extends Base_Controller
 
     public function mobile_profile($uid)
     {
+        
         $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
         $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
                                         'twittername' => 'Twitter',
@@ -108,6 +129,7 @@ class Main extends Base_Controller
 
     public function member($uid)
     {
+        
         $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
         $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
                                         'twittername' => 'Twitter',

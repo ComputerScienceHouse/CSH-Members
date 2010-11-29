@@ -4,7 +4,7 @@
     </script>
     <h1>Member Search</h1>
     <div class="heading">
-        Search
+        Search Members
     </div>
     <div class="content">
         <?php
@@ -16,12 +16,10 @@
             }
         ?>
     </div>
-</div>
     <div class="heading">
-        Results
+        Search Results
     </div>
-    <div class="content" id="results">
-    </div>
+    <div class="content" id="results"></div>
 </div>
 
 

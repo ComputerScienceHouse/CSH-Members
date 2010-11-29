@@ -67,7 +67,7 @@ class Page_Framework
         $header_data['javascript'] = $this->javascript;
         $header_data['css'] = $this->css;
         $header_data['pre_css'] = $this->pre_css;
-
+        //Util::printr($header_data);
         if(isset($_SESSION['loggedIn']))
         {
             $header_data['login_link'] = '<a href="'.site_url('login/logout').'">Logout</a> | <a href="'.site_url('account').'">Account</a>';
