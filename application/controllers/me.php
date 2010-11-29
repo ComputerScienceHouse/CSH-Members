@@ -54,6 +54,9 @@ class Me extends Base_Controller
                 break;
         }
 
+        //set it in mongodb too until we sync
+        $this->user_model->update_user($post['uid'], $post['field'], $post['new_value']);
+
         echo json_encode($result);
     }
 

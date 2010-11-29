@@ -40,6 +40,13 @@ class User_Model extends Base_Model
         
     }
 
+    public function update_user($uid, $field, $value)
+    {
+        $collection = $this->mongo->db->{$this->user_collection};
+
+        $collection->update(array('uid' => $uid), array('$set' => array($field => $value)));
+    }
+
 
 
     

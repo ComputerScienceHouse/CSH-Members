@@ -8,6 +8,7 @@
     <?php
         //Util::printr($user);
         $content_editable = '';
+        
         if($this->uri->segment(1) == 'me')
         {
             $content_editable = "CONTENTEDITABLE";
