@@ -17,52 +17,20 @@ class Main extends Base_Controller
 
     }
 
-    public function test()
+    public function sort_members($letter)
     {
-        Util::printr($_REQUEST);
-        Util::printr($_SERVER);
-    }
-
-    public function seed()
-    {
-        //$users = $this->ldap_model->get_all_users();
-
-        //Util::printr($users);
-
-        //$this->mongo->insert_users('users', $users);
-
-        //$eboard = $this->ldap_model->get_eboard();
-        //Util::printr($eboard);
-        //$this->user_model->insert_eboard($eboard);
-
-        //$rtps = $this->ldap_model->get_group('rtp');
-        //Util::printr($rtps);
-        //$this->user_model->insert_rtps($rtps);
-
-
-    }
-
-    public function delete_all()
-    {
-        $this->mongo->remove('users');
-    }
-
-    public function shit_data()
-    {
-        $users = $this->user_model->get_all_users();
-        
+        $users = $this->user_model->get_sorted_users('sn', "/^".strtolower($letter)."/i", true);
+        $result_string = '<table class="table-style"><tr><th>Name</th><th>CSH Username</th></tr>';
         foreach($users as $user)
         {
-
-            $dir = explode("/", $user['homedirectory']);
-            //Util::printr($dir);
-            if(@$dir[2] == 'u14' || @$dir[2] == 'u15' || @$dir[2] == 'u16' || @$dir[2] == 'u17' || @$dir[2] == 'u18')
-            {
-                echo "INSERT INTO users(username, full_name, is_pimp) VALUES('".$user['uid']."', '".$user['cn']."', 0);<br>";
-            }
-            //echo '"INSERT INTO users(username, full_name'
+            $result_string .= '<tr>';
+            $result_string .= '<td><a class="foooooobar" href="'.site_url('member/'.$user['uid'][0]).'">'.$user['sn'][0].', '. @$user['givenname'][0].'</a></td>';
+            $result_string .= '<td>'.$user['uid'][0].'</td>';
+            $result_string .= '</tr>';
         }
-        //Util::printr($this->ldap_model->get_all_users_raw());
+
+        //echo json_encode($result_string);
+        echo $result_string;
     }
 
     public function alt_mobile()
@@ -117,43 +85,6 @@ class Main extends Base_Controller
                                         'blogurl' => 'Website'
                                        );
         $this->load->view('mobile/mainMobileProfile_view', $data);
-    }
-
-    public function sort_members($letter)
-    {
-        $users = $this->user_model->get_sorted_users('sn', "/^".strtolower($letter)."/i", true);
-        $result_string = '<table class="table-style"><tr><th>Name</th><th>CSH Username</th></tr>';
-        foreach($users as $user)
-        {
-            $result_string .= '<tr>';
-            $result_string .= '<td><a class="foooooobar" href="'.site_url('main/member/'.$user['uid']).'">'.$user['sn'].', '. $user['givenname'].'</a></td>';
-            $result_string .= '<td>'.$user['uid'].'</td>';
-            $result_string .= '</tr>';
-        }
-        
-        //echo json_encode($result_string);
-        echo $result_string;
-    }
-
-
-
-    public function member($uid)
-    {
-        
-        $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
-        $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
-                                        'twittername' => 'Twitter',
-                                        'birthday' => 'Birthday',
-                                        'cn' => 'Common Name',
-                                        'nickname' => 'Nickname',
-                                        'cellphone' => 'Cell Phone',
-                                        'homephone' => 'Home Phone',
-                                        'mail' => 'Email Addresses',
-                                        'blogurl' => 'Website',
-                                        'drinkAdmin' => 'Drink Admin'
-                                       );
-        $this->page->render('mainMember_view', $data, null);
-    }
-    
+    }    
 }
 ?>

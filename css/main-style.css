@@ -106,9 +106,9 @@ span.h3-bold {
 }
 
 .heading {
-    margin: 0px 0px 10px 0px;
-    padding: 3px 10px 0px 10px;
-    height: 27px;
+    margin: 0px 0px 5px 0px;
+    padding: 0px 10px 4px 10px;
+    height: 20px;
     -moz-border-radius-topleft: 15px;
     -moz-border-radius-topright: 15px;
     -moz-border-radius-bottomleft: 15px;
@@ -117,11 +117,9 @@ span.h3-bold {
     -webkit-border-top-right-radius: 15px;
     -webkit-border-bottom-left-radius: 15px;
     -webkit-border-bottom-right-radius: 15px;
-
     background: #424242;
     color: #fff;
-
-    font-size: .9em;
+    /*font-size: .8em;*/
 }
 
 
@@ -199,6 +197,7 @@ span.h3-bold {
         padding: 0px 10px 0px 0px;
         width: 729px;
         border-right: 1px solid #e8e8e8;
+        font-size: .8em;
     }
         #leftColLarge p {
             margin: 0px 0px 0px 0px;
@@ -213,10 +212,14 @@ span.h3-bold {
 
 
     #leftColLarge .content {
-        margin: 0px 0px 20px 0px;
-        padding: 0px 0px 0px 20px;
-        font-size: .9em;
+        margin: 0px 0px 5px 0px;
+        padding: 0px 0px 0px 10px;
+        
     }
+        #leftColLarge .content .inner {
+
+        }
+
         #leftColLarge .content a {
             color: #780e0e;
             text-decoration: none;

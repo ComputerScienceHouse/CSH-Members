@@ -3,13 +3,20 @@ Ext.onReady(function(){});
 $(document).ready(function(){
     var content = '';
 
-    $('.content').focus(function(){
+    $('.inner').focus(function(){
         content = $(this).text();
     });
 
-    $('.content').blur(function(){
+    $('.inner').blur(function(){
         var new_data = $(this).text();
-
+        var data = {
+                new_value: new_data,
+                field: $(this).attr('id'),
+                field_index: $(this).attr('value'),
+                uid: user_id
+            }
+        console.log(data);
+        /*
         if(new_data != content)
         {
             //console.log(new_data);
@@ -37,6 +44,7 @@ $(document).ready(function(){
         {
             //console.log('no change');
         }
+        */
 
     });
 });

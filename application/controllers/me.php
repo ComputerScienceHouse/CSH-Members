@@ -15,9 +15,17 @@ class Me extends Base_Controller
     public function index()
     {
         // pull stuff out of the session here
-        $uid = 'mcg1sean';
+        //$uid = 'mcg1sean';
+        //Util::printr($_SERVER);
+        $uid = $_SERVER['WEBAUTH_USER'];
         $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
         $this->page->load_javascript(site_url('js/edit.js'));
+        $data['unwanted_fields'] = $this->unwanted_fields;
+
+        $data['field_order'] = $this->field_order;
+
+        $data['non_edit_fields'] = $this->non_edit_fields;
+        /*
         $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
                                         'birthday' => 'Birthday',
                                         'cn' => 'Common Name',
@@ -27,6 +35,8 @@ class Me extends Base_Controller
                                         'mail' => 'Email Addresses',
                                         'blogurl' => 'Website'
                                        );
+         *
+         */
         $this->page->render('mainMember_view', $data, null);
     }
 

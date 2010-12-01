@@ -21,8 +21,8 @@ class Rtp extends Base_Controller
         foreach($rtps as $user)
         {
             $result_string .= '<tr>';
-            $result_string .= '<td><a href="'.site_url('main/member/'.$user['uid']).'">'.$user['sn'].', '. $user['givenname'].'</a></td>';
-            $result_string .= '<td>'.$user['uid'].'</td>';
+            $result_string .= '<td><a href="'.site_url('member/'.$user['uid'][0]).'">'.$user['sn'][0].', '. $user['givenname'][0].'</a></td>';
+            $result_string .= '<td>'.$user['uid'][0].'</td>';
             $result_string .= '</tr>';
         }
         $result_string .= '</table>';

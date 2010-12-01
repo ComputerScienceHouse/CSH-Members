@@ -19,6 +19,11 @@ class Ldap_Model extends CI_Model
                                   'birthday', 'blogurl', 'cn', 'description', 'gecos', 'givenname',
                                   'sn', 'ritdn', 'onfloor', 'drinkAdmin', 'twittername');
 
+        $this->attributes2 = array('objectclass', 'uid', 'homedirectory', 'loginshell', 'nickname',
+                                  'rityear', 'homephone', 'cellphone', 'mail', 'aolscreenname',
+                                  'birthday', 'blogurl', 'cn', 'description', 'gecos', 'givenname',
+                                  'sn', 'ritdn', 'onfloor', 'drinkAdmin', 'twittername');
+
     }
 
     public function update_field($data)
@@ -100,7 +105,7 @@ class Ldap_Model extends CI_Model
             //unset($res[0]);
             $tmp_array = array();
             //Util::printr($res);
-            foreach($this->attributes as $attr)
+            foreach($this->attributes2 as $attr)
             {
                 unset($res[$attr]['count']);
                 if (array_key_exists($attr, $res))
@@ -141,6 +146,137 @@ class Ldap_Model extends CI_Model
             //$users[] = array('uid' => rtrim($user[1], ',ou'));
         }
         return $users;
+    }
+    /**
+     * Get a single user
+     */
+    public function get_users()
+    {
+        $users = $this->ldap->get_all_users();
+
+        unset($users['count']);
+        $all_users = array();
+        foreach ($users as $user)
+        {
+            
+            unset($user['dn']);
+            unset($user['count']);
+            $user_data = array();
+            foreach ($user as $key => $value)
+            {
+                if (gettype($key) == 'string')
+                {
+                    if($key != 'jpegPhoto' && $key != 'jpegphoto')
+                    {
+                        $tmp = $user[$key];
+                        if (array_key_exists('count', $tmp))
+                        {
+                            unset($tmp['count']);
+                        }
+                    }
+
+                    //Util::printr($tmp);
+                    $user_data[$key] = $tmp;
+                }
+            }
+            //$user_data['addresses'] = $this->get_addresses($user_data['uid'][0]);
+            //$user_data['addresses'] = $this->ldap->get_user_address($user_data['uid'][0]);
+            $all_users[] = $user_data;
+        }
+        //Util::printr($all_users);
+        foreach($all_users as &$u)
+        {
+            //echo $u['uid'][0].'<br>';
+            if($u['uid'][0] != 'atlassian')
+            {
+                $u['address'] = $this->get_addresses($u['uid'][0]);
+            }
+            
+        }
+
+        return $all_users;
+        
+    }
+
+
+    public function get_addresses($uid)
+    {
+        $addresses = $this->ldap->get_user_address($uid);
+        unset($addresses['count']);
+        $all_addresses = array();
+        foreach($addresses as $address)
+        {
+            unset($address['count']);
+            unset($address['dn']);
+            $address_data = array();
+            foreach($address as $key => $value)
+            {
+                //echo $key." => ".$value.'<br>';
+                
+                if(gettype($key) == 'string')
+                {
+                    $tmp = $address[$key];
+
+                    $val = $value;
+                    unset($val['count']);
+                    //Util::printr($tmp);
+                    $address_data[$key] = $val;
+                }
+            }
+
+            $all_addresses[] = $address_data;
+
+        }
+
+        return $all_addresses;
+    }
+
+    public function get_single_user()
+    {
+        $user = $this->ldap->get_user();
+        Util::printr($user);
+        unset($user['count']);
+        $all_users = array();
+        //foreach ($users as $user)
+        //{
+
+            //unset($user['dn']);
+            //unset($user['count']);
+            $user_data = array();
+            foreach ($user as $key => $value)
+            {
+                if (gettype($key) == 'string')
+                {
+                    if($key != 'jpegPhoto')
+                    {
+                        $tmp = $user[$key];
+                        if (array_key_exists('count', $tmp))
+                        {
+                            unset($tmp['count']);
+                        }
+                    }
+
+                    //Util::printr($tmp);
+                    $user_data[$key] = $tmp;
+                }
+            }
+            //$user_data['addresses'] = $this->get_addresses($user_data['uid'][0]);
+            //$user_data['addresses'] = $this->ldap->get_user_address($user_data['uid'][0]);
+            $all_users[] = $user_data;
+        //}
+        //Util::printr($all_users);
+        foreach($all_users as &$u)
+        {
+            //echo $u['uid'][0].'<br>';
+            if($u['uid'][0] != 'atlassian')
+            {
+                $u['address'] = $this->get_addresses($u['uid'][0]);
+            }
+
+        }
+
+        return $all_users;
+
     }
 
     

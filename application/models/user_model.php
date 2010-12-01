@@ -22,7 +22,7 @@ class User_Model extends Base_Model
 
     public function insert_eboard($eboard)
     {
-        $collection = $this->mongo->db->{$this->eboard_collection};
+        $collection = $this->mongo->mdb->{$this->eboard_collection};
         foreach($eboard as $e)
         {
             $collection->insert($e, true);
@@ -32,7 +32,7 @@ class User_Model extends Base_Model
     
     public function insert_rtps($rtps)
     {
-        $collection = $this->mongo->db->{$this->rtp_collection};
+        $collection = $this->mongo->mdb->{$this->rtp_collection};
         foreach($rtps as $rtp)
         {
             $collection->insert($rtp, true);
@@ -42,7 +42,7 @@ class User_Model extends Base_Model
 
     public function update_user($uid, $field, $value)
     {
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
 
         $collection->update(array('uid' => $uid), array('$set' => array($field => $value)));
     }
@@ -54,7 +54,7 @@ class User_Model extends Base_Model
     public function get_all_users()
     {
         // WHAT THE FUCK PHP?!?!?!?!?!?!
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
 
         $results = $collection->find()->sort(array('uid' => 1));
 
@@ -64,7 +64,7 @@ class User_Model extends Base_Model
     public function get_all_users_shit()
     {
         // WHAT THE FUCK PHP?!?!?!?!?!?!
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
 
         $results = $collection->find(array('rityear' => array('$lte' => '3')))->sort(array('uid' => 1));
 
@@ -73,7 +73,7 @@ class User_Model extends Base_Model
 
     public function get_sorted_users($index, $query, $is_regex = false)
     {
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
 
         if($is_regex)
         {
@@ -87,7 +87,7 @@ class User_Model extends Base_Model
 
     public function user_query($index, $query, $is_regex, $get_one = false)
     {
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
 
         if($is_regex)
         {
@@ -106,7 +106,7 @@ class User_Model extends Base_Model
 
     public function search($query)
     {
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
         $query = new MongoRegex("/^".$query."/i");
         $uid_result = $collection->find(array('$or' => array(array('uid' => $query), array('cn' => $query))))->sort(array('sn' => 1));
         $cn_result = $collection->find(array('cn' => $query));
@@ -123,14 +123,14 @@ class User_Model extends Base_Model
 
     public function get_rtps()
     {
-        $collection = $this->mongo->db->{$this->rtp_collection};
+        $collection = $this->mongo->mdb->{$this->rtp_collection};
 
         $rtp_uids = $collection->find()->sort(array('uid' => 1));
 
         $rtp_profiles = array();
         foreach($rtp_uids as $rtps)
         {
-            $tmp_collection = $this->mongo->db->{$this->user_collection};
+            $tmp_collection = $this->mongo->mdb->{$this->user_collection};
 
             $rtp_profiles[] = $tmp_collection->findOne(array('uid' => $rtps['uid']));
         }
@@ -141,14 +141,14 @@ class User_Model extends Base_Model
 
     public function get_eboard()
     {
-        $collection = $this->mongo->db->{$this->eboard_collection};
+        $collection = $this->mongo->mdb->{$this->eboard_collection};
 
         $eboard_uids = $collection->find()->sort(array('uid' => 1));
 
         $eboard_profiles = array();
         foreach($eboard_uids as $eboard)
         {
-            $tmp_collection = $this->mongo->db->{$this->user_collection};
+            $tmp_collection = $this->mongo->mdb->{$this->user_collection};
 
             $eboard_profiles[] = $tmp_collection->findOne(array('uid' => $eboard['uid']));
         }
@@ -159,7 +159,7 @@ class User_Model extends Base_Model
 
     public function get_drinkadmins()
     {
-        $collection = $this->mongo->db->{$this->user_collection};
+        $collection = $this->mongo->mdb->{$this->user_collection};
 
         $results = $collection->find()->sort(array('uid' => 1));
 

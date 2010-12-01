@@ -26,7 +26,7 @@
                 CSH Member Profiles
             </div>
             <div class="right">
-                <b>Welcome <a href="<?=site_url('me')?>">Sean McGary</a>!</b>
+                <b>Welcome <a href="<?=site_url('me')?>"><?=$_SERVER['WEBAUTH_LDAP_CN']?></a>!</b>
             </div>
         </div>
         <div id="container">

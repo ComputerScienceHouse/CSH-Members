@@ -64,6 +64,43 @@ class Ldap
         return $entries;
     }
 
+    public function get_user_address($uid)
+    {
+
+        $basedn = "uid=".$uid.",ou=Users,dc=csh,dc=rit,dc=edu";
+        $filter = "(|(addressName=*))";
+
+        $result = @ldap_search($this->connection, $basedn, $filter) or die("Search error.");
+        $entries = @ldap_get_entries($this->connection, $result);
+
+        //$binddn = $entries[0]["dn"];
+
+        //echo "<p>Bind DN found: " . $binddn . "</p>";
+        //echo "<hr />";
+        //Util::printr($entries);
+        //return array('cn' => $this->connection, 'bn' => $bind);
+        //unset($entries['count']);
+        return $entries;
+    }
+
+    public function get_user()
+    {
+
+        $basedn = "ou=Users,dc=csh,dc=rit,dc=edu";
+        $filter = "(|(uid=mwoz))";
+
+        $result = ldap_search($this->connection, $basedn, $filter) or die("Search error.");
+        $entries = ldap_get_entries($this->connection, $result);
+        //$binddn = $entries[0]["dn"];
+
+        //echo "<p>Bind DN found: " . $binddn . "</p>";
+        //echo "<hr />";
+        //Util::printr($entries);
+        //return array('cn' => $this->connection, 'bn' => $bind);
+        //unset($entries['count']);
+        return $entries;
+    }
+
     public function get_group($cn)
     {
 
