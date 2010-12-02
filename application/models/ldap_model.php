@@ -12,6 +12,7 @@ class Ldap_Model extends CI_Model
     public function  __construct()
     {
         parent::CI_Model();
+        $this->load->model('user_model');
         $this->ldap = new Ldap();
 
         $this->attributes = array('objectclass', 'uid', 'homedirectory', 'loginshell', 'nickname',
@@ -28,8 +29,17 @@ class Ldap_Model extends CI_Model
 
     public function update_field($data)
     {
-        $field[$data['field']][$data['field_index']] = $data['new_value'];
+        $user = $this->user_model->user_query('uid', $data['uid'], false, true);
 
+        $old_data = $user[$data['field']];
+
+        $old_data[$data['field_index']] = $data['new_value'];
+
+        //Util::printr($old_data);
+
+
+        $field[$data['field']] = $old_data;
+        //Util::printr($field);
         $dn = 'uid='.$data['uid'].",ou=Users,dc=csh,dc=rit,dc=edu";
 
         $res = ldap_mod_replace($this->ldap->connection, $dn, $field);
