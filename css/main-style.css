@@ -217,8 +217,25 @@ span.h3-bold {
         
     }
         #leftColLarge .content .inner {
-
+            
         }
+
+            #leftColLarge .content .inner .field {
+                margin: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 0px;
+                width: 80px;
+                font-weight: bold;
+                position: relative;
+                float: left;
+            }
+
+            #leftColLarge .content .inner .field-value {
+                margin: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 0px;
+                width: 300px;
+                position: relative;
+                float: left;
+            }
 
         #leftColLarge .content a {
             color: #780e0e;

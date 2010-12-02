@@ -30,6 +30,7 @@ class Member extends Base_Controller
         $data['field_order'] = $this->field_order;
 
         $data['non_edit_fields'] = $this->non_edit_fields;
+        $data['address_fields'] = $this->address_fields;
         $data['user'] = $this->user_model->user_query('uid', $uid, false, true);
         $data['display_fields'] = array('aolscreenname' => 'AOL Screen Name',
                                         'twittername' => 'Twitter',

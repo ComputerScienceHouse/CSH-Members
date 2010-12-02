@@ -3,12 +3,14 @@
         var update_url = "<?=site_url('main/sort_members')?>";
         var user_id = "<?=$user['uid'][0]?>";
         var update_field_url = '<?=site_url('me/submit_change')?>';
+        var submit_change_address = '<?=site_url('me/submit_change_address')?>';
     </script>
     <h1><?=$user['cn'][0].' ('.$user['uid'][0].')'?></h1>
     <?php
         
         $content_editable = '';
         
+        $address_displayed = false;
        
         // loop over all the fields that we want to display to the page
         foreach($field_order as $field => $value)
@@ -59,30 +61,6 @@
                         }
                         echo '</div>';
                     }
-                    else if($field == 'address')
-                    {
-
-
-                        foreach($val as $adkey => $adval)
-                        {
-                            if($adkey == 'addressname')
-                            {
-                                echo '<div class="heading">';
-                                echo $adval[0];
-                                echo '</div>';
-                            }
-                            else if($adkey != 'objectclass')
-                            {
-                                echo '<div class="content"><div class="inner" '.$content_editable.' value="'.$adkey.'" id="'.$adval.'">';
-                                echo $adkey.': '.$adval[0];
-                                echo '</div></div>';
-                            }
-                            //echo $adkey.':';
-                            //Util::printr($adval);
-                            //echo '<br>';
-                        }
-                        //echo '<br>';
-                    }
                     else
                     {
                         echo '<div class="inner" '.$content_editable.' value="'.$key.'" id="'.$field.'">';
@@ -94,11 +72,40 @@
                 } // end field display loop
                 echo '</div>';
             } // end array key check
-        }// end field loop     
-        Util::printr($user);
+        }// end field loop
+        // print the address fields at the very bottom
+        //Util::printr($user['address']);
+        echo '<div class="heading">Addresses</div>';
+        echo '<div class="content">';
+        foreach($user['address'] as $add_key => $add_val)
+        {
+            foreach($add_val as $add_index => $add_array)
+            {
+
+                if ($add_index == 'addressname')
+                {
+                    echo '<div class="heading" id="addressname_'.$add_key.'">';
+                    echo $add_array[0];
+                    echo '</div>';
+                }
+                else if ($add_index != 'objectclass')
+                {
+                    echo '<div class="content">
+                          <div class="inner">';
+                    echo '<div class="field">'.$address_fields[$add_index] . ':  </div>';
+                    
+                    echo '<div class="field-value" CONTENTEDITABLE value="'.$add_index.'_'.$add_key.'" id="address"> ' . $add_array[0].'</div>';
+                    
+                    echo '</div></div><br>';
+                }
+                else
+                {
+                
+                }
+
+            }
+
+        }
+        echo '</div>'
     ?>
 </div>
-
-
-
-

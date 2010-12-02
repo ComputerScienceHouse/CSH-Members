@@ -12,6 +12,7 @@ class Base_Controller extends Controller
     public $unwanted_fields;
     public $field_order;
     public $non_edit_fields;
+    public $address_fields;
 
     public function  __construct()
     {
@@ -33,9 +34,13 @@ class Base_Controller extends Controller
                                      'cellphone' => 'Cellphone', 'homephone' => 'Home Phone', 'aolscreenname' => 'AOL Screen Name',
                                      'twittername' => 'Twitter', 'loginshell' => 'Login Shell', 'nickname' => 'Nickname(s)',
                                      'active' => 'Active Member', 'onfloor' => 'On Floor', 'roomnumber' => 'Room #',
-                                     'alumni' => 'Alumni', 'drinkadmin' => 'Drink Admin', 'address' => 'Address');
+                                     'alumni' => 'Alumni', 'drinkadmin' => 'Drink Admin');
 
         $this->non_edit_fields = array('loginshell', 'active', 'onfloor', 'alumni', 'drinkadmin');
+
+        $this->address_fields = array('addressstreet' => 'Street', 'addresscity' => 'City', 'addressstate' => 'State',
+                                      'addressroomnumber' => 'Room #', 'addresszip' => 'Zip Code', 'addresscountry' => 'Country',
+                                      'addressdesc' => 'Description', 'addressphone' => 'Phone');
 
 
     }

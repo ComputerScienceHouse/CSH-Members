@@ -28,18 +28,39 @@ class Ldap_Model extends CI_Model
 
     public function update_field($data)
     {
-        $field[$data['field']][0] = $data['new_value'];
+        $field[$data['field']][$data['field_index']] = $data['new_value'];
+
         $dn = 'uid='.$data['uid'].",ou=Users,dc=csh,dc=rit,dc=edu";
+
         $res = ldap_mod_replace($this->ldap->connection, $dn, $field);
 
         if($res)
         {
-            return 'success!';
+            return 'success';
 
         }
         else
         {
-            return 'fail!';
+            return 'fail';
+        }
+    }
+
+    public function update_address_field($data)
+    {
+        $field[$data['field_index']][0] = $data['new_value'];
+
+        $dn = 'addressName='.$data['addressName'].',uid='.$data['uid'].",ou=Users,dc=csh,dc=rit,dc=edu";
+
+        $res = ldap_mod_replace($this->ldap->connection, $dn, $field);
+
+        if($res)
+        {
+            return 'success';
+
+        }
+        else
+        {
+            return 'fail';
         }
     }
 
