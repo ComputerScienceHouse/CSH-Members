@@ -59,6 +59,10 @@ class Me extends Base_Controller
                 break;
             case 'address':
                 break;
+            case 'birthday':
+                $bd = explode("/",$post['new_value']);
+                $post['new_value'] = $bd[2].$bd[0].$bd[1].'0000Z';
+                //echo $post['new_value'];
             default:
                 $result = $this->ldap_model->update_field($post);
                 break;

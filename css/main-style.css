@@ -210,6 +210,32 @@ span.h3-bold {
         color: #fff;
     }
 
+    #leftColLarge .letter-col {
+        margin: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 0px;
+        width: 50px;
+        position: relative;
+        float: left;
+    }
+
+    #leftColLarge .letter-results {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        width: 250px;
+        border-left: 1px solid #424242;
+        border-right: 1px solid #424242;
+        position: relative;
+        float: left;
+    }
+
+    #leftColLarge .member-profile {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 10px;
+        width: 400px;
+        float: left;
+        position: relative;
+    }
+
 
     #leftColLarge .content {
         margin: 0px 0px 5px 0px;
@@ -259,17 +285,20 @@ span.h3-bold {
 
         #leftColLarge .table-style table{
             border-collapse: collapse;
+            font-size: .8em;
         }
 
 
 
         #leftColLarge .table-style td, th {
             padding: 5px;
+            font-size: .8em;
         }
 
         #leftColLarge .table-style th {
             background: #e6e6e6;
             font-weight: bold;
+            font-size: .8em;
         }
 
         #leftColLarge .table-style tr a {

@@ -20,40 +20,75 @@
             </div><!-- /header -->
 
             <div data-role="content">
-                <h3><?=$user['givenname']." ".$user['sn']?></h3>
-                <?php
-                foreach ($display_fields as $field => $display)
+                <h1><?=$user['cn'][0].' ('.$user['uid'][0].')'?></h1>
+    <?php
+
+        $content_editable = '';
+
+        $address_displayed = false;
+
+        // loop over all the fields that we want to display to the page
+        foreach($field_order as $field => $value)
+        {
+            // make sure that user actually HAS the field, otherwise, shit will break
+            if(array_key_exists($field, $user))
+            {
+                echo '<span class="heading">'.$value.'</span>';
+                echo '<div class="content">';
+
+                // check for fields that we want the user to be able to edit
+                if(in_array($field, $non_edit_fields))
                 {
-                    echo '<span class="heading">' . $display . '</span>: ';
-                    if ($field == 'mail')
+                    $content_editable = '';
+                }
+                else
+                {
+                    if($this->uri->segment(1) == 'me')
                     {
-                        echo '<br><ul>';
-                        foreach ($user[$field] as $email)
+                        $content_editable = 'CONTENTEDITABLE';
+                    }
+                }
+
+                // loop over the values for $user['index']
+                // If a user has multiple values for an attribute (eg. mail and addresses), this is where
+                // we can display all that data
+                foreach($user[$field] as $key => $val)
+                {
+                    // $key is the index in the array. We use this to identify the
+                    // values (such as email addresses) when editing.
+                    if($field == 'mail')
+                    {
+                        echo '<div class="inner" '.$content_editable.' value="'.$key.'" id="'.$field.'">';
+                        echo '<a href="mailto:'.$val.'">'.$val.'</a><br>';
+                        echo '</div>';
+                    }
+                    else if($field == 'alumni' || $field == 'drinkadmin' || $field == 'active' || $field == 'onfloor')
+                    {
+                        // display 1's and 0's as Yes's and No's
+                        echo '<div class="inner" value="'.$key.'" id="'.$field.'" '.$content_editable.'>';
+                        if($val == 0)
                         {
-                            echo '<li><a href="mailto:' . $email['email'] . '" rel=external>' . $email['email'] . '</a></li>';
+                            echo 'No';
                         }
-                        echo '</ul>';
-                    }
-                    elseif($field == 'cellphone' || $field == 'homephone')
-                    {
-                        $phone = str_replace('-', '', $user[$field]);
-                        echo '<a href="tel:+'.$phone.'" rel=external>'.$phone.'</a></span><br>';
-                    }
-                    elseif($field == 'birthday')
-                    {
-                        echo '<span class="foo">'.Util::format_birthday($user[$field]).'</span><br>';
-                    }
-                    elseif($field == 'aolscreenname')
-                    {
-                        echo '<span class="foo"><a href="aim:goim?screenname='.$user[$field].'" rel=external>'.$user[$field].'</a></span><br>';
+                        else
+                        {
+                            echo 'Yes';
+                        }
+                        echo '</div>';
                     }
                     else
                     {
-                        echo '<span class="foo">'.$user[$field].'</span><br>';
-                    }
-                    echo '<br>';
-                }
-                ?>
+                        echo '<div class="inner" '.$content_editable.' value="'.$key.'" id="'.$field.'">';
+                        echo $val;
+                        echo '</div>';
+                    }// end conditional field formatting
+
+
+                } // end field display loop
+                echo '</div>';
+            } // end array key check
+        }// end field loop
+    ?>
             </div><!-- /content -->
 
             <div data-role="footer">

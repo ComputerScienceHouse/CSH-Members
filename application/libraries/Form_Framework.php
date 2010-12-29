@@ -11,10 +11,13 @@ class Form_Framework
         $form = array();
 
         $search_text = self::input('search_text', 'search_text', '', '', 'pretty', 'form-field');
-        $search_text_label = self::label('Search (uid and cn)', 'form-label');
+        $search_text_label = self::label('', 'form-label');
+
+        $search_params = self::label('<p>(uid, cn, sn, givenname, blogurl, cellphone, homephone, aolscreenname, twittername, loginshell, roomnumber, mail, nickname)</p>', 'form-label');
 
         $form[] = '<form id="search_form">';
         $form[] = self::div_wrap('create-new-container', array($search_text_label, $search_text));
+        $form[] = self::div_wrap('create-new-container', array($search_params));
         $form[] = self::div_wrap('create-new-container', array('<br><input type="submit" value="Submit" id="submit_search">'));
         $form[] = form_close();
 

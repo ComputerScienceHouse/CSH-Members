@@ -1,10 +1,7 @@
 <html>
     <head>
         <title>CSH Member Profiles</title>
-        <link href="<?=site_url('js/ext-3.2.1/resources/css/ext-all.css')?>" rel="stylesheet" type="text/css">
-        <link href="<?=site_url('js/ext-3.2.1/resources/css/xtheme-gray.css')?>" rel="stylesheet" type="text/css">
-        <script src="<?=site_url('js/ext-3.2.1/adapter/ext/ext-base-debug.js')?>" type="text/javascript"></script>
-        <script src="<?=site_url('js/ext-3.2.1/ext-all-debug.js')?>" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core-debug.js" type="text/javascript"></script>
 
         <link href="<?=site_url('css/main-style.css')?>" rel="stylesheet" type="text/css">
         <?php

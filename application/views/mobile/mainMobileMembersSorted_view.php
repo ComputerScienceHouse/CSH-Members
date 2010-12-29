@@ -19,7 +19,7 @@
                     <?php
                     foreach($users as $user)
                     {
-                        echo '<li><a href="'.site_url('main/mobile_profile/'.$user['uid']).'">'.$user['sn'].', '.$user['givenname'].'</a></li>';
+                        echo '<li><a href="'.site_url('main/mobile_profile/'.$user['uid'][0]).'">'.$user['sn'][0].', '.$user['givenname'][0].'</a></li>';
                     }
                     ?>
 

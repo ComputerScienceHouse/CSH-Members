@@ -15,7 +15,30 @@ $(document).ready(function(){
             //console.log('loaded?');
         });
     });
+
+    $('.sort_member').live('click', function(){
+        //console.log($(this).attr('value'));
+
+        
+        Ext.Ajax.request({
+            url: get_member + '/'+$(this).attr('value'),
+            success: function(response, opts)
+            {
+                var obj = Ext.decode(response.responseText);
+
+                $('#member-profile').html('');
+                $('#member-profile').append(obj);
+            },
+            failure: function(response, opts)
+            {
+
+            }
+        });
+        
+    });
 });
+
+
 
 
 function getContent(letter, type)

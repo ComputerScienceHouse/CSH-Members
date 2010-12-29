@@ -128,11 +128,18 @@ class User_Model extends Base_Model
         }
     }
 
-    public function search($query)
+    public function search($query, $indexes)
     {
         $collection = $this->mongo->mdb->{$this->user_collection};
         $query = new MongoRegex("/^".$query."/i");
-        $uid_result = $collection->find(array('$or' => array(array('uid' => $query), array('cn' => $query))))->sort(array('sn' => 1));
+
+        $index_array = array();
+        foreach($indexes as $index)
+        {
+            $index_array[] = array($index => $query);
+        }
+
+        $uid_result = $collection->find(array('$or' => $index_array))->sort(array('sn' => 1));
         $cn_result = $collection->find(array('cn' => $query));
 
         $processed_result = array();

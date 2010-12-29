@@ -77,7 +77,7 @@ $(document).ready(function(){
             uid: user_id
         }
 
-        console.log(data);
+        //console.log(data);
         var div_ref = $(this);
         if(new_data != content)
         {

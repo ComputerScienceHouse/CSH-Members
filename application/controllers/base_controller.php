@@ -14,6 +14,8 @@ class Base_Controller extends Controller
     public $non_edit_fields;
     public $address_fields;
 
+    public $query_indexes;
+
     public function  __construct()
     {
         parent::Controller();
@@ -41,6 +43,9 @@ class Base_Controller extends Controller
         $this->address_fields = array('addressstreet' => 'Street', 'addresscity' => 'City', 'addressstate' => 'State',
                                       'addressroomnumber' => 'Room #', 'addresszip' => 'Zip Code', 'addresscountry' => 'Country',
                                       'addressdesc' => 'Description', 'addressphone' => 'Phone');
+
+        $this->query_indexes = array('uid', 'cn', 'sn', 'givenname', 'blogurl', 'cellphone', 'homephone',
+                                     'aolscreenname', 'twittername', 'loginshell', 'roomnumber', 'mail', 'nickname');
 
 
     }
