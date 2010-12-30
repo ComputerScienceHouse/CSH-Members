@@ -44,14 +44,23 @@
                     if($field == 'mail')
                     {
                         echo '<div class="inner" value="'.$key.'" id="'.$field.'">';
-                        echo '<div class="data" value="mail" id="mail_'.$key.'">
+                        echo '<div class="data" value="'.$field.'" id="'.$field.'_'.$key.'">
                             <a href="mailto:'.$val.'">'.$val.'</a>
-                          </div>
-                          <div class="edit">
-                            <a href="#" class="edit_field" id="mail_'.$key.'" value="edit">Edit</a>
-                          </div>
-                          <br>';
-                        echo '</div>';
+                          </div>';
+                        if($this->uri->segment(1) == 'me')
+                        {
+                          echo '<div class="edit">
+                            <a href="#" class="edit_field" id="'.$field.'_'.$key.'" value="edit">Edit</a>
+                          </div>';
+                          echo '<br>';
+                          echo '</div>';
+                        }
+                        else
+                        {
+                          echo '<br>';
+                          echo '</div>';
+                        }
+
                     }
                     else if($field == 'alumni' || $field == 'drinkadmin' || $field == 'active' || $field == 'onfloor')
                     {
@@ -76,9 +85,23 @@
                     }
                     else
                     {
-                        echo '<div class="inner" '.$content_editable.' value="'.$key.'" id="'.$field.'">';
-                        echo $val;
-                        echo '</div>';
+                        echo '<div class="inner" value="'.$key.'" id="'.$field.'">';
+                        echo '<div class="data" value="'.$field.'" id="'.$field.'_'.$key.'">
+                            '.$val.'
+                          </div>';
+                        if($this->uri->segment(1) == 'me')
+                        {
+                            echo '<div class="edit">
+                            <a href="#" class="edit_field" id="'.$field.'_'.$key.'" value="edit">Edit</a>
+                          </div>
+                          <br>';
+                            echo '</div>';
+                        }
+                        else
+                        {
+                            echo '<br>';
+                            echo '</div>';
+                        }
                     }// end conditional field formatting
 
                     
@@ -90,14 +113,21 @@
         //Util::printr($user['address']);
         echo '<div class="heading">Addresses</div>';
         echo '<div class="content">';
+     
+        //Util::printr($user['address']);
+        // add_key == field name (IE city, state, etc)
+        // add_value == field value (in array form)
         foreach($user['address'] as $add_key => $add_val)
         {
+            //echo 'add_key: '.$add_key.' - add_val: '.$add_val.'<br>';
+            // add_index == the index of the value
+            // add_array the text associated with the index
             foreach($add_val as $add_index => $add_array)
             {
 
                 if ($add_index == 'addressname')
                 {
-                    echo '<div class="heading" id="addressname_'.$add_key.'">';
+                    echo '<div class="heading" id="addressname_'.$add_key.'" value="'.$add_array[0].'">';
                     echo $add_array[0];
                     echo '</div>';
                 }
@@ -106,19 +136,39 @@
                     $content_editable = '';
                     if($this->uri->segment(1) == 'me')
                     {
-                        $content_editable = 'CONTENTEDITABLE';
+                        $content_editable = 'contenteditable="false"';
                     }
-                    echo '<div class="content">
-                          <div class="inner">';
-                    echo '<div class="field">'.$address_fields[$add_index] . ':  </div>';
-                    
-                    echo '<div class="field-value" '.$content_editable.' value="'.$add_index.'_'.$add_key.'" id="address"> ' . $add_array[0].'</div>';
-                    
-                    echo '</div></div><br>';
+
+                    // address_*addressname*_
+                    //
+                    //
+
+                   
+
+                    echo '<div class="content" value="'.$user['address'][$add_key]['addressname'][0].'">
+                        <div class="inner" value="address">
+                            <div class="field">'.$address_fields[$add_index] . ':  </div>
+                                <div class="data" '.$content_editable.' value="'.$add_index.'" id="'.$add_index.'_0">'
+                                        .$add_array[0].
+                                '   </div>';
+
+                    if($this->uri->segment(1) == 'me')
+                    {
+                        echo '<div class="edit" value="address">
+                                    <a href="#" class="edit_field" id="'.$add_index.'_0" value="address">Edit</a>
+                                </div>
+                            </div>
+                       </div>';
+                    }
+                    else
+                    {
+                        echo '</div></div>';
+                    }
+
                 }
                 else
                 {
-                
+
                 }
 
             }

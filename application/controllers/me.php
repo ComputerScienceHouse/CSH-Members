@@ -73,7 +73,7 @@ class Me extends Base_Controller
         }
 
         //set it in mongodb too until we sync
-        //$this->user_model->update_user($post);
+        $this->user_model->update_user($post);
 
         echo json_encode($result);
     }
@@ -89,19 +89,14 @@ class Me extends Base_Controller
             $post[$item] = $this->input->post($item);
         }
 
-        $index_explode = explode("_", $post['field_index']);
-        $post['field_index'] = $index_explode[0];
-        $post['address_index'] = $index_explode[1];
+        //Util::printr($post);
+
+        //$index_explode = explode("_", $post['field_index']);
+        //$post['field_index'] = $index_explode[0];
+        $post['address_index'] = 0;
         $result = '';
-        switch($post['field'])
-        {
-            case 'address':
-                $result = $this->ldap_model->update_address_field($post);
-                break;
-            default:
-               
-                break;
-        }
+
+        $result = $this->ldap_model->update_address_field($post);
 
         //set it in mongodb too until we sync
         $this->user_model->update_user_address($post);

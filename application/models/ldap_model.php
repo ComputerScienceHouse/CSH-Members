@@ -66,7 +66,8 @@ class Ldap_Model extends CI_Model
 
     public function update_address_field($data)
     {
-        $field[$data['field_index']][0] = $data['new_value'];
+
+        $field[$data['field']][0] = $data['new_value'];
 
         $dn = 'addressName='.$data['addressName'].',uid='.$data['uid'].",ou=Users,dc=csh,dc=rit,dc=edu";
 
@@ -79,7 +80,7 @@ class Ldap_Model extends CI_Model
         }
         else
         {
-            return 'fail';
+            return $res;
         }
     }
 

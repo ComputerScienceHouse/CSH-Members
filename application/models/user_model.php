@@ -76,16 +76,16 @@ class User_Model extends Base_Model
     {
         $user = $this->user_query('uid', $data['uid'], false, true);
 
-        //Util::printr($user);
+        //Util::printr($data);
 
-        $old_data = $user[$data['field']];
+        $old_data = $user['address'];
         //Util::printr($old_data);
-        $old_data[$data['address_index']][$data['field_index']][0] = $data['new_value'];
+        $old_data[$data['field_index']][$data['field']][0] = $data['new_value'];
         //Util::printr($old_data);
 
         $collection = $this->mongo->mdb->{$this->user_collection};
 
-        $collection->update(array('uid' => $data['uid']), array('$set' => array($data['field'] => $old_data)));
+        $collection->update(array('uid' => $data['uid']), array('$set' => array('address' => $old_data)));
     }
 
 
