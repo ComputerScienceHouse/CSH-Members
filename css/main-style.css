@@ -263,6 +263,30 @@ span.h3-bold {
                 float: left;
             }
 
+            #leftColLarge .content .inner .data {
+                width: 600px;
+                display: block;
+                position: relative;
+                float: left;
+            }
+
+            #leftColLarge .content .inner .edit {
+                width: 50px;
+                display: block;
+                position: relative;
+                float: right;
+                text-align: right;
+            }
+
+            #leftColLarge .content .inner .edit a, a:visited {
+                font-style: italic;
+                color: #434343;
+            }
+
+            #leftColLarge .content .inner .edit a:hover {
+                color: #969696;
+            }
+
         #leftColLarge .content a {
             color: #780e0e;
             text-decoration: none;
@@ -332,11 +356,13 @@ span.h3-bold {
 
         #rightColSmall .tabbed a {
             color: #780e0e;
+            font-style: normal;
             text-decoration: none;
         }
 
         #rightColSmall .tabbed a:visited {
             color: #780e0e;
+            font-style: normal;
             text-decoration: none;
         }
 

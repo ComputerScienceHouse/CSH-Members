@@ -42,17 +42,34 @@ class User_Model extends Base_Model
 
     public function update_user($data)
     {
+
+
         $user = $this->user_query('uid', $data['uid'], false, true);
 
         //Util::printr($user);
 
-        $old_data = $user[$data['field']];
+        if($data['new_value'] == '')
+        {
+            // delete
+            $old_data = $user[$data['field']];
+            unset($old_data[$data['field_index']]);
+            $old_data = array_values($old_data);
 
-        $old_data[$data['field_index']] = $data['new_value'];
+            $collection = $this->mongo->mdb->{$this->user_collection};
 
-        $collection = $this->mongo->mdb->{$this->user_collection};
+            $collection->update(array('uid' => $data['uid']), array('$set' => array($data['field'] => $old_data)));
+        }
+        else
+        {
 
-        $collection->update(array('uid' => $data['uid']), array('$set' => array($data['field'] => $old_data)));
+            $old_data = $user[$data['field']];
+
+            $old_data[$data['field_index']] = $data['new_value'];
+
+            $collection = $this->mongo->mdb->{$this->user_collection};
+
+            $collection->update(array('uid' => $data['uid']), array('$set' => array($data['field'] => $old_data)));
+        }
     }
 
     public function update_user_address($data)

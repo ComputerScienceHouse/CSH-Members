@@ -43,8 +43,14 @@
                     // values (such as email addresses) when editing.
                     if($field == 'mail')
                     {
-                        echo '<div class="inner" '.$content_editable.' value="'.$key.'" id="'.$field.'">';
-                        echo '<a href="mailto:'.$val.'">'.$val.'</a><br>';
+                        echo '<div class="inner" value="'.$key.'" id="'.$field.'">';
+                        echo '<div class="data" value="mail" id="mail_'.$key.'">
+                            <a href="mailto:'.$val.'">'.$val.'</a>
+                          </div>
+                          <div class="edit">
+                            <a href="#" class="edit_field" id="mail_'.$key.'" value="edit">Edit</a>
+                          </div>
+                          <br>';
                         echo '</div>';
                     }
                     else if($field == 'alumni' || $field == 'drinkadmin' || $field == 'active' || $field == 'onfloor')

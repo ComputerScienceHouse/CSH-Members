@@ -53,6 +53,10 @@ class Me extends Base_Controller
             $post[$item] = $this->input->post($item);
         }
         $result = '';
+        if($post['new_value'] == 'DELETE')
+        {
+            $post['new_value'] = '';
+        }
         switch($post['field'])
         {
             case 'uid':
@@ -69,7 +73,7 @@ class Me extends Base_Controller
         }
 
         //set it in mongodb too until we sync
-        $this->user_model->update_user($post);
+        //$this->user_model->update_user($post);
 
         echo json_encode($result);
     }

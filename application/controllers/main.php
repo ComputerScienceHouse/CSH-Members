@@ -13,6 +13,7 @@ class Main extends Base_Controller
     public function index()
     {
         $this->page->load_javascript(site_url('js/sort_members.js'));
+        $this->page->load_javascript(site_url('js/search.js'));
         $this->page->render('mainIndex_view', '', null);
 
     }

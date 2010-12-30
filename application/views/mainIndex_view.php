@@ -1,6 +1,7 @@
 <div id="leftColLarge" class="column">
     <script type="text/javascript">
-        var update_url = "<?=site_url('main/sort_members')?>";
+        var sort_members = "<?=site_url('main/sort_members')?>";
+        var update_url = "<?=site_url('search/search_members')?>";
     </script>
     <h1>Members</h1>
     <div class="heading">
@@ -25,9 +26,22 @@
         ?>
     </div>
     <div class="heading">
+        Search Members
+    </div>
+    <div class="content">
+        <?php
+            $form = Form_Framework::search_form();
+
+            foreach($form as $item)
+            {
+                echo $item;
+            }
+        ?>
+    </div>
+    <div class="heading">
         Members
     </div>
-    <div class="content" id="member_results">
+    <div class="content" id="results">
     </div>
 </div>
 

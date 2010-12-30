@@ -11,33 +11,9 @@ $(document).ready(function(){
 
     $('a.sort_letter').click(function(){
         //console.log($(this).text());
-        $('#member_results').load(update_url + '/' + $(this).text(), function(){
+        console.log('jquery');
+        $('#results').load(sort_members + '/' + $(this).text(), function(){
             //console.log('loaded?');
         });
     });
 });
-
-
-function getContent(letter, type)
-{
-    switch(type)
-    {
-        case 1:
-            Ext.Ajax.request({
-               url: update_url + '/' + letter,
-               success: function(response, opts){
-                   var obj = Ext.decode(response.responseText);
-                   var test = $(obj);
-                   $('#member_results').append(test);
-                   
-                   //document.getElementById('member_results').appendChild(obj);
-               },
-               failure: function(response, opts){
-                   alert('data fetch failed');
-               }
-            });
-            break;
-        default:
-            alert('Fuck, you broke it. Nice job...');
-    }
-}

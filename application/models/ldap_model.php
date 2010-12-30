@@ -33,13 +33,22 @@ class Ldap_Model extends CI_Model
 
         $old_data = $user[$data['field']];
 
-        $old_data[$data['field_index']] = $data['new_value'];
+        if($data['new_value'] == '')
+        {
+            //remove element at index
+            unset($old_data[$data['field_index']]);
+        }
+        else
+        {
+            //change element at index to be the new value
+            $old_data[$data['field_index']] = $data['new_value'];
+        }
 
-        //Util::printr($old_data);
-
-
+        $old_data = array_values($old_data);
         $field[$data['field']] = $old_data;
+
         //Util::printr($field);
+
         $dn = 'uid='.$data['uid'].",ou=Users,dc=csh,dc=rit,dc=edu";
 
         $res = ldap_mod_replace($this->ldap->connection, $dn, $field);
